@@ -1,0 +1,7 @@
+﻿services:
+  marketwizardapi:
+    image: marketwizardapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+
