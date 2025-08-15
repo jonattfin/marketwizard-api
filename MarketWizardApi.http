@@ -1,11 +1,6 @@
 @MarketWizardApi_HostAddress = http://localhost:5196
 
-GET {{MarketWizardApi_HostAddress}}/todos/
-Accept: application/json
-
-###
-
-GET {{MarketWizardApi_HostAddress}}/todos/1
+GET {{MarketWizardApi_HostAddress}}/graphql/
 Accept: application/json
 
 ###
