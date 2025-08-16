@@ -121,7 +121,7 @@ public class Datastore : IDatastore
 
         return portfolios;
     }
-    
+
     private static IEnumerable<PortfolioNews> CreatePortfolioNewsById(Guid id, CancellationToken cancellationToken)
     {
         var news = new List<PortfolioNews>
@@ -145,10 +145,51 @@ public class Datastore : IDatastore
 
     public IEnumerable<Portfolio> GetPortfolios(CancellationToken cancellationToken)
         => _portfolios;
-    
+
     public Portfolio? GetPortfolioById(string id, CancellationToken cancellationToken)
         => _portfolios.FirstOrDefault(p => p.Id == Guid.Parse(id));
 
     public IEnumerable<PortfolioNews> GetPortfolioNewsById(string id, CancellationToken cancellationToken)
         => CreatePortfolioNewsById(Guid.Parse(id), cancellationToken);
+
+    public PortfolioPerformance? GetPortfolioPerformanceById(string id, CancellationToken cancellationToken)
+    {
+        return new PortfolioPerformance()
+        {
+            Id = Guid.NewGuid(),
+            PortfolioId = Guid.Parse(id),
+            Ratio = new PortfolioRatio()
+            {
+                Beta = 0.99,
+                Sharpe = 12.09,
+                Sortino = 10.6
+            },
+           Returns = new List<string>() {"ASML", "SU", "VWRL", "DECK"}.Select(symbol => new PortfolioReturns()
+           {
+               AssetId = Guid.NewGuid(),
+               AssetName = symbol,
+               Months = Enumerable.Range(0, 12).Select((i) => i * new Random().NextDouble()),
+               Weeks = Enumerable.Range(0, 52).Select((i) => i * new Random().NextDouble())
+           })
+        };
+    }
+
+    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(string id, CancellationToken cancellationToken)
+    {
+        return new List<PortfolioAsset>()
+        {
+            new PortfolioAsset()
+            {
+                Symbol = "ASML",
+                NumberOfShares = 5,
+                PricePerShare = 500
+            },
+            new PortfolioAsset()
+            {
+                Symbol = "DECK",
+                NumberOfShares = 5,
+                PricePerShare = 100
+            }
+        };
+    }
 }

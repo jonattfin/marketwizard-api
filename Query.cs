@@ -30,4 +30,16 @@ public class Query
     [UseSorting]
     public IEnumerable<PortfolioNews> GetPortfolioNewsById([FromServices] IDatastore dataStore, string id, CancellationToken cancellationToken)
         => dataStore.GetPortfolioNewsById(id, cancellationToken);
+    
+    
+    [UseProjection]
+    public PortfolioPerformance? GetPortfolioPerformanceById([FromServices] IDatastore dataStore, string id, CancellationToken cancellationToken)
+        => dataStore.GetPortfolioPerformanceById(id, cancellationToken);
+    
+    [UsePaging]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById([FromServices] IDatastore dataStore, string id, CancellationToken cancellationToken)
+        => dataStore.GetPortfolioAssetsById(id, cancellationToken);
 }
