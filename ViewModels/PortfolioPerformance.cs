@@ -22,7 +22,7 @@ public class PortfolioPerformance
 {
     public Guid Id { get; set; }
     
-    public Guid PortfolioId { get; set; }
+    public string PortfolioId { get; set; }
     
     public PortfolioRatio Ratio { get; set; }
     

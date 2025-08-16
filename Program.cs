@@ -7,16 +7,22 @@ var builder = WebApplication.CreateSlimBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
-        builder =>
+        policy =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
         });
 });
 
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddSeq(builder.Configuration.GetSection("Seq"));
+});
+
 builder.Services.AddSingleton<IDatastore, Datastore>();
+builder.Services.Decorate<IDatastore, DatastoreLoggingDecorator>();
 
 builder.Services
     .AddGraphQLServer()
