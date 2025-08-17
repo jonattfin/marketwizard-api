@@ -4,7 +4,7 @@ public class PortfolioNews
 {
     public Guid Id { get; set; }
     
-    public string PortfolioId { get; set; }
+    public Guid PortfolioId { get; set; }
 
     public string Time { get; set; }
     

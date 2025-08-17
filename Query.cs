@@ -20,24 +20,24 @@ public class Query(IDatastore datastore)
         => datastore.GetPortfolios(cancellationToken);
     
     [UseProjection]
-    public Portfolio? GetPortfolioById(string id, CancellationToken cancellationToken)
+    public Portfolio? GetPortfolioById(Guid id, CancellationToken cancellationToken)
         => datastore.GetPortfolioById(id, cancellationToken);
     
     [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<PortfolioNews> GetPortfolioNewsById(string id, CancellationToken cancellationToken)
+    public IEnumerable<PortfolioNews> GetPortfolioNewsById(Guid id, CancellationToken cancellationToken)
         => datastore.GetPortfolioNewsById(id, cancellationToken);
     
     [UseProjection]
-    public PortfolioPerformance? GetPortfolioPerformanceById(string id, CancellationToken cancellationToken)
+    public PortfolioPerformance? GetPortfolioPerformanceById(Guid id, CancellationToken cancellationToken)
         => datastore.GetPortfolioPerformanceById(id, cancellationToken);
     
     [UsePaging]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(string id, CancellationToken cancellationToken)
+    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(Guid id, CancellationToken cancellationToken)
         => datastore.GetPortfolioAssetsById(id, cancellationToken);
 }

@@ -33,21 +33,18 @@ public class Datastore : IDatastore
 
     private IEnumerable<Portfolio> CreatePortfolios()
     {
-        var images = CreateImages().ToList();
-        var random = new Random();
-        
-        foreach (var i in Enumerable.Range(0, 100))
+        foreach (var i in Enumerable.Range(0, 5))
         {
             yield return new Portfolio()
             {
-                Id = i.ToString(),
+                Id = Guid.NewGuid(),
                 Name = $"Portfolio {i}",
                 Description = """
                               Designed for investment goals with a short-medium term horizon. 
                               Ideal for investors who value principal conservation but are comfortable with a small degree of risk and volatility to seek some growth potential.
                               This portfolio typically comprises 25% in ETFs containing stocks, 73% in ETFs that replicate bonds, and 2% in cash (EUR)
                               """,
-                ImageUrl = images[random.Next(0, images.Count)],
+                ImageUrl = GetImage(i),
                 LastUpdated = DateTime.Now,
                 TotalAmount = 100000,
                 Risk = RiskLevel.Low,
@@ -58,12 +55,16 @@ public class Datastore : IDatastore
             };
         }
 
-        IEnumerable<string> CreateImages()
+        string GetImage(int i)
         {
-            yield return "https://images.unsplash.com/photo-1618044733300-9472054094ee";
-            yield return "https://images.unsplash.com/photo-1612178991541-b48cc8e92a4d";
-            yield return "https://images.unsplash.com/photo-1506450041641-40545dddaf90";
-            yield return "https://images.unsplash.com/photo-1548454934-501d30773413";
+            return i switch
+            {
+                0 => "https://images.unsplash.com/photo-1618044733300-9472054094ee",
+                1 => "https://images.unsplash.com/photo-1612178991541-b48cc8e92a4d",
+                2 => "https://images.unsplash.com/photo-1506450041641-40545dddaf90",
+                3 => "https://images.unsplash.com/photo-1548454934-501d30773413",
+                _ => ""
+            };
         }
     }
 
@@ -78,7 +79,7 @@ public class Datastore : IDatastore
                 Provider = "Zacks",
                 Symbol = "DECK",
                 Time = "one day ago",
-                PortfolioId = ""
+                PortfolioId = Guid.NewGuid()
             }
         };
 
@@ -91,13 +92,13 @@ public class Datastore : IDatastore
     public IEnumerable<Portfolio> GetPortfolios(CancellationToken cancellationToken)
         => _portfolios;    
     
-    public Portfolio? GetPortfolioById(string id, CancellationToken cancellationToken)
+    public Portfolio? GetPortfolioById(Guid id, CancellationToken cancellationToken)
         => _portfolios.FirstOrDefault(p => p.Id == id);
 
-    public IEnumerable<PortfolioNews> GetPortfolioNewsById(string id, CancellationToken cancellationToken)
-        => CreatePortfolioNewsById(Guid.Parse(id), cancellationToken);
+    public IEnumerable<PortfolioNews> GetPortfolioNewsById(Guid id, CancellationToken cancellationToken)
+        => CreatePortfolioNewsById(id, cancellationToken);
 
-    public PortfolioPerformance? GetPortfolioPerformanceById(string id, CancellationToken cancellationToken)
+    public PortfolioPerformance? GetPortfolioPerformanceById(Guid id, CancellationToken cancellationToken)
     {
         return new PortfolioPerformance()
         {
@@ -119,7 +120,7 @@ public class Datastore : IDatastore
         };
     }
 
-    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(string id, CancellationToken cancellationToken)
+    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(Guid id, CancellationToken cancellationToken)
     {
         return new List<PortfolioAsset>()
         {

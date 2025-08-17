@@ -8,11 +8,11 @@ public interface IDatastore
     
     IEnumerable<Portfolio> GetPortfolios(CancellationToken cancellationToken);
     
-    Portfolio? GetPortfolioById(string id, CancellationToken cancellationToken);
+    Portfolio? GetPortfolioById(Guid id, CancellationToken cancellationToken);
     
-    IEnumerable<PortfolioNews> GetPortfolioNewsById(string id, CancellationToken cancellationToken);
+    IEnumerable<PortfolioNews> GetPortfolioNewsById(Guid id, CancellationToken cancellationToken);
     
-    PortfolioPerformance? GetPortfolioPerformanceById(string id, CancellationToken cancellationToken);
+    PortfolioPerformance? GetPortfolioPerformanceById(Guid id, CancellationToken cancellationToken);
     
-    IEnumerable<PortfolioAsset> GetPortfolioAssetsById(string id, CancellationToken cancellationToken);
+    IEnumerable<PortfolioAsset> GetPortfolioAssetsById(Guid id, CancellationToken cancellationToken);
 }
