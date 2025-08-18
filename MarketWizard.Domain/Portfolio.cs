@@ -10,7 +10,7 @@ public class Portfolio : IEntity
     
     public string ImageUrl { get; set; }
 
-    public IQueryable<PortfolioAsset> PortfolioAssets { get; set; }
+    public IQueryable<PortfolioAsset> PortfolioAssets { get; set; } = new  List<PortfolioAsset>().AsQueryable();
     
-    public IQueryable<PortfolioNews> PortfolioNews { get; set; }
+    public IQueryable<PortfolioNews> PortfolioNews { get; set; }  = new  List<PortfolioNews>().AsQueryable();
 }

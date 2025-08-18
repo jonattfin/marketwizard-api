@@ -22,27 +22,4 @@ public class Query
     public IQueryable<Portfolio> GetPortfolios([FromServices] IRepository repository,
         CancellationToken cancellationToken)
         => repository.GetPortfolios(cancellationToken);
-
-    [UseProjection]
-    public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid id,
-        CancellationToken cancellationToken)
-        => await repository.GetPortfolioById(id, cancellationToken);
-
-    [UsePaging(IncludeTotalCount = true)]
-    [UseProjection]
-    [UseFiltering]
-    [UseSorting]
-    public async Task<IQueryable<PortfolioNews>> GetPortfolioNewsById([FromServices] IRepository repository,
-        Guid portfolioId,
-        CancellationToken cancellationToken)
-        => await repository.GetPortfolioNewsById(portfolioId, cancellationToken);
-
-    [UsePaging]
-    [UseProjection]
-    [UseFiltering]
-    [UseSorting]
-    public async Task<IQueryable<PortfolioAsset>> GetPortfolioAssetsById([FromServices] IRepository repository,
-        Guid portfolioId, CancellationToken cancellationToken)
-        => await repository.GetPortfolioAssetsById(portfolioId, cancellationToken);
-    
 }
