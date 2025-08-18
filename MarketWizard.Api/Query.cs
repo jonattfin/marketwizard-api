@@ -1,43 +1,48 @@
-﻿using MarketWizardApi.Data;
-using MarketWizardApi.ViewModels;
+﻿using MarketWizard.Data;
+using MarketWizard.Data.Repositories;
+using MarketWizard.Domain;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MarketWizardApi;
 
-public class Query(IDatastore datastore)
+public class Query
 {
     [UsePaging]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<Asset> GetWatchlistAssets(CancellationToken cancellationToken)
-        => datastore.GetWatchlistAssets(cancellationToken);
+    public IEnumerable<Asset> GetWatchlistAssets([FromServices] MarketWizardContext context,
+        CancellationToken cancellationToken)
+        => context.Assets;
+
+    [UsePaging(IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting()]
+    public IQueryable<Portfolio> GetPortfolios([FromServices] IRepository repository,
+        CancellationToken cancellationToken)
+        => repository.GetPortfolios(cancellationToken);
+
+    [UseProjection]
+    public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid id,
+        CancellationToken cancellationToken)
+        => await repository.GetPortfolioById(id, cancellationToken);
 
     [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<Portfolio> GetPortfolios(CancellationToken cancellationToken)
-        => datastore.GetPortfolios(cancellationToken);
-    
-    [UseProjection]
-    public Portfolio? GetPortfolioById(Guid id, CancellationToken cancellationToken)
-        => datastore.GetPortfolioById(id, cancellationToken);
-    
-    [UsePaging(IncludeTotalCount = true)]
-    [UseProjection]
-    [UseFiltering]
-    [UseSorting]
-    public IEnumerable<PortfolioNews> GetPortfolioNewsById(Guid id, CancellationToken cancellationToken)
-        => datastore.GetPortfolioNewsById(id, cancellationToken);
-    
-    [UseProjection]
-    public PortfolioPerformance? GetPortfolioPerformanceById(Guid id, CancellationToken cancellationToken)
-        => datastore.GetPortfolioPerformanceById(id, cancellationToken);
-    
+    public async Task<IQueryable<PortfolioNews>> GetPortfolioNewsById([FromServices] IRepository repository,
+        Guid portfolioId,
+        CancellationToken cancellationToken)
+        => await repository.GetPortfolioNewsById(portfolioId, cancellationToken);
+
     [UsePaging]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<PortfolioAsset> GetPortfolioAssetsById(Guid id, CancellationToken cancellationToken)
-        => datastore.GetPortfolioAssetsById(id, cancellationToken);
+    public async Task<IQueryable<PortfolioAsset>> GetPortfolioAssetsById([FromServices] IRepository repository,
+        Guid portfolioId, CancellationToken cancellationToken)
+        => await repository.GetPortfolioAssetsById(portfolioId, cancellationToken);
+    
 }

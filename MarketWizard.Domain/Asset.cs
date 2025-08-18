@@ -1,6 +1,6 @@
 ﻿namespace MarketWizard.Domain;
 
-public class Asset
+public class Asset : IEntity
 {
     public Guid Id { get; set; }
     

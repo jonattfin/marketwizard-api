@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <PublishAot>true</PublishAot>
+        <PublishAot>false</PublishAot>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
@@ -14,11 +14,15 @@
       <PackageReference Include="HotChocolate.AspNetCore.CommandLine" Version="15.1.8" />
       <PackageReference Include="HotChocolate.Data" Version="15.1.8" />
       <PackageReference Include="HotChocolate.Types.Analyzers" Version="15.1.8" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
       <PackageReference Include="Scrutor" Version="6.1.0" />
       <PackageReference Include="Seq.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
       <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MarketWizard.Data\MarketWizard.Data.csproj" />
     </ItemGroup>
 
 </Project>

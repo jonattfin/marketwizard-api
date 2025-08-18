@@ -1,5 +1,5 @@
+using MarketWizard.Data;
 using MarketWizardApi;
-using MarketWizardApi.Data;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -21,15 +21,14 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSeq(builder.Configuration.GetSection("Seq"));
 });
 
-builder.Services.AddSingleton<IDatastore, Datastore>();
-builder.Services.Decorate<IDatastore, DatastoreLoggingDecorator>();
-
 builder.Services
     .AddGraphQLServer()
     .AddFiltering()
     .AddProjections()
     .AddSorting()
     .AddQueryType<Query>();
+
+builder.Services.AddPersistenceServices();
 
 var app = builder.Build();
 
