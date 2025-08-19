@@ -22,4 +22,9 @@ public class Query
     public IQueryable<Portfolio> GetPortfolios([FromServices] IRepository repository,
         CancellationToken cancellationToken)
         => repository.GetPortfolios(cancellationToken);
+
+    [UseProjection]
+    public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid portfolioId,
+        CancellationToken cancellationToken)
+        => await repository.GetPortfolioById(portfolioId, cancellationToken);
 }

@@ -1,15 +1,16 @@
 ﻿using MarketWizard.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketWizard.Data;
 
 public static class PersistenceServiceRegistration
 {
-    public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
+    public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // services.AddDbContext<MarketWizardContext>(options => options.UseInMemoryDatabase(databaseName: "MarketWizard"));
-        services.AddDbContext<MarketWizardContext>(options => options.UseSqlite("Data Source=MarketWizard.db"));
+        var connectionString = configuration.GetConnectionString("MarketWizardConnection");
+        services.AddDbContext<MarketWizardContext>(options => options.UseNpgsql(connectionString));
 
         services.AddScoped<IRepository, Repository>();
         

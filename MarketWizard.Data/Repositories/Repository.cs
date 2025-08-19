@@ -15,6 +15,11 @@ public class Repository(MarketWizardContext context) : IRepository
 
     public async Task<Portfolio?> GetPortfolioById(Guid portfolioId, CancellationToken cancellationToken)
     {
-        return await context.Portfolios.FirstOrDefaultAsync(p => p.Id == portfolioId, cancellationToken);
+        var p = await context.Portfolios
+            .Include(p => p.PortfolioAssets)
+            .Include(p => p.PortfolioNews)
+            .FirstOrDefaultAsync(p => p.Id == portfolioId, cancellationToken);
+
+        return p;
     }
 }

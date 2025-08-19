@@ -1,7 +1,17 @@
 ﻿services:
-  marketwizardapi:
-    image: marketwizardapi
-    build:
-      context: .
-      dockerfile: Dockerfile
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: marketwizard
+    ports:
+      - "5432:5432"
+#  marketwizardapi:
+#    image: marketwizardapi
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - postgres
 

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B6E835A-F63D-4E7A-84C4-66788F5BE8D6}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
+		MarketWizard.Api\compose.yaml = MarketWizard.Api\compose.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.Domain", ".\MarketWizard.Domain\MarketWizard.Domain.csproj", "{3D99DD6D-2CA4-4E66-B240-1A4DE64C536F}"

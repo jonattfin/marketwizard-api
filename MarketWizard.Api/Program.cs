@@ -28,7 +28,7 @@ builder.Services
     .AddSorting()
     .AddQueryType<Query>();
 
-builder.Services.AddPersistenceServices();
+builder.Services.AddPersistenceServices(builder.Configuration);
 
 var app = builder.Build();
 
