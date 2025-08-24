@@ -37,3 +37,30 @@ public class PortfolioNews
     
     public string Provider {get; set; }
 }
+
+public class PortfolioRatio
+{
+    public double BetaRatio { get; set; }
+    
+    public double SharpeRatio { get; set; }
+    
+    public double SortinoRatio { get; set; }
+}
+
+public class AssetReturn
+{
+    public string AssetName { get; set; }
+    
+    public double[] WeeklyReturns { get; set; }
+    
+    public double[] MonthlyReturns { get; set; }
+}
+
+public class PortfolioPerformance
+{
+    public Guid Id { get; set; }
+
+    public PortfolioRatio Ratio { get; set; }
+    
+    public AssetReturn[] Returns { get; set; }
+}

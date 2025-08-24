@@ -1,5 +1,4 @@
-﻿using MarketWizard.Data;
-using MarketWizard.Data.Repositories;
+﻿using MarketWizard.Data.Repositories;
 using MarketWizard.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +10,9 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IEnumerable<Asset> GetWatchlistAssets([FromServices] MarketWizardContext context,
+    public IQueryable<Asset> GetWatchlistAssets([FromServices] IRepository repository,
         CancellationToken cancellationToken)
-        => context.Assets;
+        => repository.GetAssets(cancellationToken);
 
     [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
@@ -27,4 +26,19 @@ public class Query
     public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid portfolioId,
         CancellationToken cancellationToken)
         => await repository.GetPortfolioById(portfolioId, cancellationToken);
+    
+    
+    [UseProjection]
+    public async Task<PortfolioPerformance?> GetPortfolioPerformanceById([FromServices] IRepository repository, Guid portfolioId,
+        CancellationToken cancellationToken)
+        => await repository.GetPortfolioPerformanceById(portfolioId, cancellationToken);
+    
+    
+    [UsePaging(IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting()]
+    public IEnumerable<PortfolioNews> GetPortfolioNewsById([FromServices] IRepository repository, Guid portfolioId,
+        CancellationToken cancellationToken)
+        => repository.GetPortfolioNewsById(portfolioId, cancellationToken);
 }
