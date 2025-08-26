@@ -1,6 +1,8 @@
-﻿namespace MarketWizard.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class Portfolio : IEntity
+namespace MarketWizard.Domain;
+
+public partial class Portfolio : IEntity
 {
     public Guid Id { get; set; }
     
@@ -13,7 +15,32 @@ public class Portfolio : IEntity
     public string Description { get; set; }
     
     public string ImageUrl { get; set; }
-
+    
     public IEnumerable<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
     
+}
+
+public partial class Portfolio
+{
+    [NotMapped]
+    public double TotalValue => PortfolioAssets.Sum(x => x.NumberOfShares * x.PricePerShare);
+
+    [NotMapped]
+    public double UnrealizedGain
+    {
+        get
+        {
+            var unrealizedGain = 0.0;
+            
+            foreach (var portfolioAsset in PortfolioAssets)
+            {
+                if (portfolioAsset.Asset.LastPrice is null) 
+                    continue;
+                
+                unrealizedGain += (portfolioAsset.Asset.LastPrice.Value - portfolioAsset.PricePerShare) * portfolioAsset.NumberOfShares;
+            }
+            
+            return unrealizedGain;
+        }
+    }
 }

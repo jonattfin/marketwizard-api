@@ -1,4 +1,6 @@
-﻿namespace MarketWizard.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MarketWizard.Domain;
 
 public enum AssetType
 {
@@ -7,7 +9,7 @@ public enum AssetType
     Crypto
 }
 
-public class Asset : IEntity
+public partial class Asset : IEntity
 {
     public Guid Id { get; set; }
     
@@ -20,4 +22,16 @@ public class Asset : IEntity
     public AssetType Type { get; set; }
     
     public IEnumerable<AssetPriceHistory> PriceHistories { get; set; } = new List<AssetPriceHistory>();
+}
+
+public partial class Asset
+{
+    [NotMapped]
+    public double? LastPrice
+    {
+        get
+        {
+            return PriceHistories.OrderByDescending(x => x.Date).FirstOrDefault()?.Price;
+        }
+    }
 }
