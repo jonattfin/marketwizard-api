@@ -4,18 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data;
 
-public class MarketWizardContext: DbContext
+public class MarketWizardContext(DbContextOptions<MarketWizardContext> options) : DbContext(options)
 {
+    public DbSet<User> Users { get; set; }
+    
     public DbSet<Asset> Assets { get; set; }
     
     public DbSet<Portfolio> Portfolios { get; set; }
-    
-    public MarketWizardContext(DbContextOptions<MarketWizardContext> options) : base(options)
-    {
-    }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Seed();
+        // modelBuilder.Seed(); // TODO: uncomment when ready
     }
 }

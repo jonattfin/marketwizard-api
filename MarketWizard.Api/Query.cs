@@ -26,4 +26,10 @@ public class Query
     public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid portfolioId,
         CancellationToken cancellationToken)
         => await repository.GetPortfolioById(portfolioId, cancellationToken);
+    
+    
+    [UseProjection]
+    public async Task<Portfolio?> GetPortfolioPerformanceById([FromServices] IRepository repository, Guid portfolioId,
+        CancellationToken cancellationToken)
+        => await repository.GetPortfolioById(portfolioId, cancellationToken);
 }

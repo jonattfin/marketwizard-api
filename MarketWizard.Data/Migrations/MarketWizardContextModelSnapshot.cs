@@ -60,8 +60,8 @@ namespace MarketWizard.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -144,7 +144,7 @@ namespace MarketWizard.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MarketWizard.Domain.AssetPriceHistory", b =>

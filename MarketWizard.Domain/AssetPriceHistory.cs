@@ -8,7 +8,7 @@ public class AssetPriceHistory : IEntity
     
     public Guid AssetId { get; set; }
     
-    public decimal Price { get; set; }
+    public double Price { get; set; }
     
     public DateTime Date { get; set; }
 }
