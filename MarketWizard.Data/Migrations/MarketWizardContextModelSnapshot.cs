@@ -40,25 +40,34 @@ namespace MarketWizard.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Assets");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d82dcdad-f6cc-4b94-a8ec-e26abe09e590"),
-                            Description = "Description 1",
-                            Name = "Asset 1",
-                            Symbol = "ASML"
-                        },
-                        new
-                        {
-                            Id = new Guid("313089d6-cebc-44db-8d6d-10788c512656"),
-                            Description = "Description 2",
-                            Name = "Asset 2",
-                            Symbol = "DECK"
-                        });
+            modelBuilder.Entity("MarketWizard.Domain.AssetPriceHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("AssetPriceHistory");
                 });
 
             modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
@@ -79,18 +88,14 @@ namespace MarketWizard.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Portfolios");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("54f53f92-1043-4ca4-b32a-4db5a2d1013f"),
-                            Description = "Description 1",
-                            ImageUrl = "image",
-                            Name = "Portfolio 1"
-                        });
+                    b.ToTable("Portfolios");
                 });
 
             modelBuilder.Entity("MarketWizard.Domain.PortfolioAsset", b =>
@@ -123,41 +128,45 @@ namespace MarketWizard.Data.Migrations
                     b.ToTable("PortfolioAsset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.PortfolioNews", b =>
+            modelBuilder.Entity("MarketWizard.Domain.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AssetId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Headline")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("PortfolioId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Provider")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Time")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssetId");
+                    b.ToTable("User");
+                });
 
-                    b.HasIndex("PortfolioId");
+            modelBuilder.Entity("MarketWizard.Domain.AssetPriceHistory", b =>
+                {
+                    b.HasOne("MarketWizard.Domain.Asset", "Asset")
+                        .WithMany("PriceHistories")
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.ToTable("PortfolioNews");
+                    b.Navigation("Asset");
+                });
+
+            modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
+                {
+                    b.HasOne("MarketWizard.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MarketWizard.Domain.PortfolioAsset", b =>
@@ -175,26 +184,14 @@ namespace MarketWizard.Data.Migrations
                     b.Navigation("Asset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.PortfolioNews", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Asset", b =>
                 {
-                    b.HasOne("MarketWizard.Domain.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MarketWizard.Domain.Portfolio", null)
-                        .WithMany("PortfolioNews")
-                        .HasForeignKey("PortfolioId");
-
-                    b.Navigation("Asset");
+                    b.Navigation("PriceHistories");
                 });
 
             modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
                 {
                     b.Navigation("PortfolioAssets");
-
-                    b.Navigation("PortfolioNews");
                 });
 #pragma warning restore 612, 618
         }

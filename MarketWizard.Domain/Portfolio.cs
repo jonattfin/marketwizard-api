@@ -4,6 +4,8 @@ public class Portfolio : IEntity
 {
     public Guid Id { get; set; }
     
+    public User User { get; set; }
+    
     public string Name { get; set; }
     
     public string Description { get; set; }
@@ -12,5 +14,4 @@ public class Portfolio : IEntity
 
     public IEnumerable<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
     
-    public IEnumerable<PortfolioNews> PortfolioNews { get; set; }  = new  List<PortfolioNews>();
 }

@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace MarketWizard.Data.Migrations
 {
     /// <inheritdoc />
@@ -20,7 +18,8 @@ namespace MarketWizard.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Symbol = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false)
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,10 +27,44 @@ namespace MarketWizard.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetPriceHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AssetId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetPriceHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssetPriceHistory_Assets_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Assets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Portfolios",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: false)
@@ -39,6 +72,12 @@ namespace MarketWizard.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Portfolios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Portfolios_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,47 +107,10 @@ namespace MarketWizard.Data.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PortfolioNews",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AssetId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Time = table.Column<string>(type: "text", nullable: false),
-                    Symbol = table.Column<string>(type: "text", nullable: false),
-                    Headline = table.Column<string>(type: "text", nullable: false),
-                    Provider = table.Column<string>(type: "text", nullable: false),
-                    PortfolioId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PortfolioNews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PortfolioNews_Assets_AssetId",
-                        column: x => x.AssetId,
-                        principalTable: "Assets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PortfolioNews_Portfolios_PortfolioId",
-                        column: x => x.PortfolioId,
-                        principalTable: "Portfolios",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.InsertData(
-                table: "Assets",
-                columns: new[] { "Id", "Description", "Name", "Symbol" },
-                values: new object[,]
-                {
-                    { new Guid("313089d6-cebc-44db-8d6d-10788c512656"), "Description 2", "Asset 2", "DECK" },
-                    { new Guid("d82dcdad-f6cc-4b94-a8ec-e26abe09e590"), "Description 1", "Asset 1", "ASML" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Portfolios",
-                columns: new[] { "Id", "Description", "ImageUrl", "Name" },
-                values: new object[] { new Guid("54f53f92-1043-4ca4-b32a-4db5a2d1013f"), "Description 1", "image", "Portfolio 1" });
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetPriceHistory_AssetId",
+                table: "AssetPriceHistory",
+                column: "AssetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PortfolioAsset_AssetId",
@@ -121,30 +123,28 @@ namespace MarketWizard.Data.Migrations
                 column: "PortfolioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PortfolioNews_AssetId",
-                table: "PortfolioNews",
-                column: "AssetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PortfolioNews_PortfolioId",
-                table: "PortfolioNews",
-                column: "PortfolioId");
+                name: "IX_Portfolios_UserId",
+                table: "Portfolios",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PortfolioAsset");
+                name: "AssetPriceHistory");
 
             migrationBuilder.DropTable(
-                name: "PortfolioNews");
+                name: "PortfolioAsset");
 
             migrationBuilder.DropTable(
                 name: "Assets");
 
             migrationBuilder.DropTable(
                 name: "Portfolios");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

@@ -7,10 +7,10 @@ public static class ModelBuilderExtensions
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
-        var inventory = InventoryFactory.Create();
-
-        modelBuilder.Entity<Portfolio>().HasData(inventory.Portfolios.ToList());
-        modelBuilder.Entity<Asset>().HasData(inventory.Assets.ToList());
+        // var inventory = InventoryFactory.Create();
+        //
+        // modelBuilder.Entity<Portfolio>().HasData(inventory.Portfolios.ToList());
+        // modelBuilder.Entity<Asset>().HasData(inventory.Assets.ToList());
     }
     
 }

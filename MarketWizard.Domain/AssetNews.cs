@@ -1,6 +1,6 @@
 ﻿namespace MarketWizard.Domain;
 
-public class AssetPrice
+public class AssetNews
 {
     public Guid Id { get; set; }
     
@@ -8,7 +8,11 @@ public class AssetPrice
     
     public Guid AssetId { get; set; }
     
-    public decimal Price { get; set; }
-    
     public DateTime Date { get; set; }
+    
+    public string Symbol { get; set; }
+    
+    public string Headline { get; set; }
+    
+    public string Provider {get; set; }
 }

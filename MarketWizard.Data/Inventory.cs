@@ -23,7 +23,6 @@ public class Inventory
             Description = "Description 1",
             ImageUrl = "image",
             PortfolioAssets = new List<PortfolioAsset>().AsQueryable(),
-            PortfolioNews = new List<PortfolioNews>().AsQueryable()
         };
     }
 

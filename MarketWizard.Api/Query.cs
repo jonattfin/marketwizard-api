@@ -26,19 +26,4 @@ public class Query
     public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid portfolioId,
         CancellationToken cancellationToken)
         => await repository.GetPortfolioById(portfolioId, cancellationToken);
-    
-    
-    [UseProjection]
-    public async Task<PortfolioPerformance?> GetPortfolioPerformanceById([FromServices] IRepository repository, Guid portfolioId,
-        CancellationToken cancellationToken)
-        => await repository.GetPortfolioPerformanceById(portfolioId, cancellationToken);
-    
-    
-    [UsePaging(IncludeTotalCount = true)]
-    [UseProjection]
-    [UseFiltering]
-    [UseSorting()]
-    public IEnumerable<PortfolioNews> GetPortfolioNewsById([FromServices] IRepository repository, Guid portfolioId,
-        CancellationToken cancellationToken)
-        => repository.GetPortfolioNewsById(portfolioId, cancellationToken);
 }
