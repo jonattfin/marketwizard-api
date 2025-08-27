@@ -26,7 +26,8 @@ builder.Services
     .AddFiltering()
     .AddProjections()
     .AddSorting()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 

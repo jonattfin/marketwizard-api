@@ -5,6 +5,14 @@ namespace MarketWizard.Data.Repositories;
 
 public class Repository(MarketWizardContext context) : IRepository
 {
+    public async Task<Guid> AddPortfolio(Portfolio portfolio)
+    {
+        await context.Portfolios.AddAsync(portfolio);
+        await context.SaveChangesAsync();
+        
+        return portfolio.Id;
+    }
+
     public IQueryable<Asset> GetAssets(CancellationToken cancellationToken)
         => context.Assets.OrderByDescending(a => a.Name)
             .Include(a => a.PriceHistories);
