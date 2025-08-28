@@ -1,5 +1,6 @@
 using MarketWizard.Application;
 using MarketWizard.Data;
+using MarketWizardApi;
 using MarketWizardApi.Schema;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -34,6 +35,8 @@ builder.Services
 
 builder.Services.AddPersistenceServices(builder.Configuration)
     .AddApplicationServices(builder.Configuration);
+
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 

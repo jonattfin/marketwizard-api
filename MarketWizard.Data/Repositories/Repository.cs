@@ -1,14 +1,15 @@
 ﻿using MarketWizard.Domain;
+using MarketWizard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
 
 public class Repository(MarketWizardContext context) : IRepository
 {
-    public async Task<Guid> AddPortfolio(Portfolio portfolio)
+    public async Task<Guid> AddPortfolio(Portfolio portfolio, CancellationToken cancellationToken)
     {
-        await context.Portfolios.AddAsync(portfolio);
-        await context.SaveChangesAsync();
+        await context.Portfolios.AddAsync(portfolio, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
         
         return portfolio.Id;
     }

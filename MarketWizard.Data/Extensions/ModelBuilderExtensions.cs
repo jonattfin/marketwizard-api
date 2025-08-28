@@ -1,4 +1,5 @@
 ﻿using MarketWizard.Domain;
+using MarketWizard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Extensions;

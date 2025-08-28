@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using MarketWizard.Application.Messaging.Behaviours;
+using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketWizard.Application;
@@ -7,7 +10,13 @@ public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IPortfolioService, PortfolioService>();
+        var currentAssembly = typeof(ApplicationServiceRegistration).Assembly;
+        
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(currentAssembly));
+        
+        // add behaviours & validators
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddValidatorsFromAssembly(currentAssembly);
         
         return services;
     }

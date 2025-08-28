@@ -1,4 +1,4 @@
-﻿namespace MarketWizard.Domain;
+﻿namespace MarketWizard.Domain.Entities;
 
 public class AssetNews
 {

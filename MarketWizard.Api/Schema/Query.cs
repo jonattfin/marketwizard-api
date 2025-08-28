@@ -1,5 +1,6 @@
 ﻿using MarketWizard.Data.Repositories;
 using MarketWizard.Domain;
+using MarketWizard.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketWizardApi.Schema;

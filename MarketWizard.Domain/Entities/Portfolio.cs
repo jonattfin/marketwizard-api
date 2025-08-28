@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using MarketWizard.Domain.Entities.Interfaces;
 
-namespace MarketWizard.Domain;
+namespace MarketWizard.Domain.Entities;
 
 public partial class Portfolio : IEntity
 {

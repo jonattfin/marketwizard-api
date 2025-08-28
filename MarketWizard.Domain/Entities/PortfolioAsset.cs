@@ -1,4 +1,6 @@
-﻿namespace MarketWizard.Domain;
+﻿using MarketWizard.Domain.Entities.Interfaces;
+
+namespace MarketWizard.Domain.Entities;
 
 public enum PortfolioOperationType
 {
