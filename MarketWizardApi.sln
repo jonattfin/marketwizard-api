@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizardApi", "MarketWi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.Application", "MarketWizard.Application\MarketWizard.Application.csproj", "{B7B0E5DF-10FA-4F7D-85C3-5FF27B08D232}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.Application.Tests", "MarketWizard.Application.Tests\MarketWizard.Application.Tests.csproj", "{1387A80E-AD32-45BD-BE17-5F3D7A3EEF38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{B7B0E5DF-10FA-4F7D-85C3-5FF27B08D232}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7B0E5DF-10FA-4F7D-85C3-5FF27B08D232}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7B0E5DF-10FA-4F7D-85C3-5FF27B08D232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1387A80E-AD32-45BD-BE17-5F3D7A3EEF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1387A80E-AD32-45BD-BE17-5F3D7A3EEF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1387A80E-AD32-45BD-BE17-5F3D7A3EEF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1387A80E-AD32-45BD-BE17-5F3D7A3EEF38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

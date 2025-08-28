@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace MarketWizard.Application.AddPortfolio;
+namespace MarketWizard.Application.Features.AddPortfolio;
 
 public class AddPortfolioCommandValidator: AbstractValidator<AddPortfolioCommand>
 {

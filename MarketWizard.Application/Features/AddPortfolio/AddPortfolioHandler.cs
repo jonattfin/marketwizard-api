@@ -4,7 +4,7 @@ using MarketWizard.Data.Repositories;
 using MarketWizard.Domain.Entities;
 using MediatR;
 
-namespace MarketWizard.Application.AddPortfolio;
+namespace MarketWizard.Application.Features.AddPortfolio;
 
 public record AddPortfolioCommand(Portfolio Portfolio) : ICommand<Guid>;
 

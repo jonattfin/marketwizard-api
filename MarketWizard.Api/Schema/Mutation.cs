@@ -1,6 +1,6 @@
 ﻿
 using MarketWizard.Application;
-using MarketWizard.Application.AddPortfolio;
+using MarketWizard.Application.Features.AddPortfolio;
 using MarketWizard.Domain;
 using MarketWizard.Domain.Entities;
 using MarketWizardApi.Dto.Inputs;
