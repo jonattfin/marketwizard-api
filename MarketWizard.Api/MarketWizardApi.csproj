@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MarketWizard.Application\MarketWizard.Application.csproj" />
       <ProjectReference Include="..\MarketWizard.Data\MarketWizard.Data.csproj" />
     </ItemGroup>
 

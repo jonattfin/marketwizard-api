@@ -2,7 +2,7 @@
 using MarketWizard.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketWizardApi;
+namespace MarketWizardApi.Schema;
 
 public class Query
 {
