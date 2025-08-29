@@ -11,10 +11,10 @@ public interface IUnitOfWork
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
 
-public class UnitOfWork(MarketWizardContext context, IGenericRepository<Portfolio> portfolioRepository, IGenericRepository<Asset> assetRepository): IUnitOfWork
+public class UnitOfWork(MarketWizardContext context): IUnitOfWork
 {
-    public IGenericRepository<Portfolio> PortfolioRepository { get; } = portfolioRepository;
-    public IGenericRepository<Asset> AssetRepository { get; } = assetRepository;
+    public IGenericRepository<Portfolio> PortfolioRepository { get; } = new GenericRepository<Portfolio>(context);
+    public IGenericRepository<Asset> AssetRepository { get; } = new GenericRepository<Asset>(context);
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

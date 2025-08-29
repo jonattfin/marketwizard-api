@@ -13,8 +13,6 @@ public static class PersistenceServiceRegistration
         var connectionString = configuration.GetConnectionString("MarketWizardConnection");
         services.AddDbContext<MarketWizardContext>(options => options.UseNpgsql(connectionString));
         
-        services.AddScoped<IGenericRepository<Portfolio>, PortfolioRepository>();
-        services.AddScoped<IGenericRepository<Asset>, AssetRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
