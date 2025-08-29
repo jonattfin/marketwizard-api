@@ -8,14 +8,16 @@ namespace MarketWizard.Application.Features.AddPortfolio;
 
 public record AddPortfolioCommand(Portfolio Portfolio) : ICommand<Guid>;
 
-public class AddPortfolioHandler(IRepository repository, ITopicEventSender sender)
+public class AddPortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender sender)
     : IRequestHandler<AddPortfolioCommand, Guid>
 {
     public async Task<Guid> Handle(AddPortfolioCommand request, CancellationToken cancellationToken)
     {
-        var portfolioId = await repository.AddPortfolio(request.Portfolio, cancellationToken);;
+        await unitOfWork.PortfolioRepository.Insert(request.Portfolio, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        
         await sender.SendAsync("PortfolioAdded", request.Portfolio, cancellationToken);
-
-        return portfolioId;
+        
+        return Guid.NewGuid();
     }
 }

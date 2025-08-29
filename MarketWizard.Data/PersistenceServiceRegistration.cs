@@ -1,4 +1,5 @@
 ﻿using MarketWizard.Data.Repositories;
+using MarketWizard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,10 @@ public static class PersistenceServiceRegistration
     {
         var connectionString = configuration.GetConnectionString("MarketWizardConnection");
         services.AddDbContext<MarketWizardContext>(options => options.UseNpgsql(connectionString));
-
-        services.AddScoped<IRepository, Repository>();
+        
+        services.AddScoped<IGenericRepository<Portfolio>, PortfolioRepository>();
+        services.AddScoped<IGenericRepository<Asset>, AssetRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
     }

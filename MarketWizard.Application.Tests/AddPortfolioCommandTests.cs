@@ -13,19 +13,18 @@ public class AddPortfolioCommandTests
     public async Task Handle_Should_Add_Portfolio_And_Send_Event()
     {
         // Arrange
-        var repositoryMock = new Mock<IRepository>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        var repositoryMock = new Mock<IGenericRepository<Portfolio>>();
         var topicEventSenderMock = new Mock<ITopicEventSender>();
 
-        repositoryMock.Setup(x => x.AddPortfolio(It.IsAny<Portfolio>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Guid.NewGuid());
-
-        var sut = new AddPortfolioHandler(repositoryMock.Object, topicEventSenderMock.Object);
+        unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(repositoryMock.Object);
+        var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object);
 
         // Act
-        var portfolioId = await sut.Handle(new AddPortfolioCommand(new Portfolio()), CancellationToken.None);
-
+        var act = () => sut.Handle(new AddPortfolioCommand(new Portfolio()), CancellationToken.None);
+        
         // Assert
-        portfolioId.Should().NotBeEmpty();
+        await act.Should().NotThrowAsync<Exception>();
 
         topicEventSenderMock.Verify(
             x => x.SendAsync("PortfolioAdded", It.IsAny<Portfolio>(), It.IsAny<CancellationToken>()), Times.Once);

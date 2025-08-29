@@ -1,5 +1,4 @@
 ﻿using MarketWizard.Data.Repositories;
-using MarketWizard.Domain;
 using MarketWizard.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,26 +10,21 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<Asset> GetWatchlistAssets([FromServices] IRepository repository,
+    public IQueryable<Asset> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
-        => repository.GetAssets(cancellationToken);
+        => unitOfWork.AssetRepository.Get(cancellationToken);
 
     [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting()]
-    public IQueryable<Portfolio> GetPortfolios([FromServices] IRepository repository,
+    public IQueryable<Portfolio> GetPortfolios([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
-        => repository.GetPortfolios(cancellationToken);
+        => unitOfWork.PortfolioRepository.Get(cancellationToken);
 
     [UseProjection]
-    public async Task<Portfolio?> GetPortfolioById([FromServices] IRepository repository, Guid portfolioId,
+    public async Task<Portfolio?> GetPortfolioById([FromServices] IUnitOfWork unitOfWork, Guid portfolioId,
         CancellationToken cancellationToken)
-        => await repository.GetPortfolioById(portfolioId, cancellationToken);
-    
-    
-    [UseProjection]
-    public async Task<Portfolio?> GetPortfolioPerformanceById([FromServices] IRepository repository, Guid portfolioId,
-        CancellationToken cancellationToken)
-        => await repository.GetPortfolioById(portfolioId, cancellationToken);
+        => await unitOfWork.PortfolioRepository.GetById(portfolioId, cancellationToken);
+
 }
