@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MarketWizard.Application.Messaging.Behaviours;
+using MarketWizard.Application.Behaviours;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

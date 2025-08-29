@@ -2,9 +2,8 @@
 using MarketWizard.Application.Exceptions;
 using MarketWizard.Application.Interfaces;
 using MediatR;
-using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 
-namespace MarketWizard.Application.Messaging.Behaviours;
+namespace MarketWizard.Application.Behaviours;
 
 public sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
