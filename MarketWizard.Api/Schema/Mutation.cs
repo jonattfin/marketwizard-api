@@ -17,7 +17,7 @@ public class Mutation
         
         var portfolioId = await mediator.Send(new AddPortfolioCommand(portfolioEntity));
         
-        return portfolioId.Adapt<PortfolioOutput>();
+        return new PortfolioOutput(){Id = portfolioId};
     }
     
 }
