@@ -1,4 +1,4 @@
-﻿using MarketWizard.Application.Interfaces;
+﻿using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

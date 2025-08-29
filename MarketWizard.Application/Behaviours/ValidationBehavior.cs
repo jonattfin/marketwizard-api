@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MarketWizard.Application.Exceptions;
-using MarketWizard.Application.Interfaces;
+using MarketWizard.Application.Interfaces.Cqrs;
 using MediatR;
 
 namespace MarketWizard.Application.Behaviours;

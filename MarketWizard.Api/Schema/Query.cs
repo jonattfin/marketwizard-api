@@ -1,4 +1,4 @@
-﻿using MarketWizard.Application.Interfaces;
+﻿using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +12,7 @@ public class Query
     [UseSorting]
     public IQueryable<Asset> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
-        => unitOfWork.AssetRepository.Get(cancellationToken);
+        => unitOfWork.AssetRepository.GetAllWithPriceHistories(cancellationToken);
 
     [UsePaging(IncludeTotalCount = true)]
     [UseProjection]
@@ -25,6 +25,6 @@ public class Query
     [UseProjection]
     public async Task<Portfolio?> GetPortfolioById([FromServices] IUnitOfWork unitOfWork, Guid portfolioId,
         CancellationToken cancellationToken)
-        => await unitOfWork.PortfolioRepository.GetById(portfolioId, cancellationToken);
+        => await unitOfWork.PortfolioRepository.GetByIdWithRelatedEntities(portfolioId, cancellationToken);
 
 }

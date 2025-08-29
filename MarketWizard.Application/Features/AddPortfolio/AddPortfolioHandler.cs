@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Subscriptions;
-using MarketWizard.Application.Interfaces;
+using MarketWizard.Application.Interfaces.Cqrs;
+using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Domain.Entities;
 using MediatR;
 

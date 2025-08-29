@@ -1,4 +1,4 @@
-﻿using MarketWizard.Application.Interfaces;
+﻿using MarketWizard.Application.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;

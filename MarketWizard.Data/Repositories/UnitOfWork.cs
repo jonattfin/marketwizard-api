@@ -1,12 +1,11 @@
-﻿using MarketWizard.Application.Interfaces;
-using MarketWizard.Domain.Entities;
+﻿using MarketWizard.Application.Interfaces.Persistence;
 
 namespace MarketWizard.Data.Repositories;
 
 public class UnitOfWork(MarketWizardContext context): IUnitOfWork
 {
-    public IGenericRepository<Portfolio> PortfolioRepository { get; } = new GenericRepository<Portfolio>(context);
-    public IGenericRepository<Asset> AssetRepository { get; } = new GenericRepository<Asset>(context);
+    public IPortfolioRepository PortfolioRepository { get; } = new PortfolioRepository(context);
+    public IAssetRepository AssetRepository { get; } = new AssetRepository(context);
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

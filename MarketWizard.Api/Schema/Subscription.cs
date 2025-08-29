@@ -1,5 +1,4 @@
-﻿using MarketWizard.Domain;
-using MarketWizard.Domain.Entities;
+﻿using MarketWizard.Domain.Entities;
 
 namespace MarketWizardApi.Schema;
 

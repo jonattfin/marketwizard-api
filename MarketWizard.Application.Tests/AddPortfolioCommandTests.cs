@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Application.Interfaces;
+using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Domain.Entities;
 using Moq;
 
@@ -14,7 +14,7 @@ public class AddPortfolioCommandTests
     {
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
-        var repositoryMock = new Mock<IGenericRepository<Portfolio>>();
+        var repositoryMock = new Mock<IPortfolioRepository>();
         var topicEventSenderMock = new Mock<ITopicEventSender>();
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(repositoryMock.Object);
