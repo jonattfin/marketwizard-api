@@ -14,10 +14,9 @@ public class Mutation
     public async Task<PortfolioOutput> AddPortfolio(PortfolioInput portfolioInput, [FromServices] IMediator mediator)
     {
         var portfolioEntity = portfolioInput.Adapt<Portfolio>();
-        
+
         var portfolioId = await mediator.Send(new AddPortfolioCommand(portfolioEntity));
-        
-        return new PortfolioOutput(){Id = portfolioId};
+
+        return new PortfolioOutput() { Id = portfolioId };
     }
-    
 }

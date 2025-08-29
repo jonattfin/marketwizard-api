@@ -1,4 +1,4 @@
-﻿namespace MarketWizard.Application.Messaging.Abstractions;
+﻿namespace MarketWizard.Application.Exceptions;
 
 public class CustomValidationException(Dictionary<string, string[]> errorsDictionary) : ApplicationException
 {

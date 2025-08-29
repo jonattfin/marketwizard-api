@@ -1,16 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MarketWizard.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
-
-public interface IGenericRepository<TEntity> where TEntity : class
-{
-    IQueryable<TEntity> Get(CancellationToken cancellationToken = default);
-    Task<TEntity?> GetById(object id, CancellationToken cancellationToken = default);
-    Task Insert(TEntity entity, CancellationToken cancellationToken = default);
-    Task Delete(object id, CancellationToken cancellationToken = default);
-    void Delete(TEntity entityToDelete);
-    void Update(TEntity entityToUpdate);
-}
 
 public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericRepository<TEntity> where TEntity : class
 {

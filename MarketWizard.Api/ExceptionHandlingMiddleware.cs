@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using MarketWizard.Application.Messaging.Abstractions;
+using MarketWizard.Application.Exceptions;
 
 namespace MarketWizardApi;
 

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Data.Repositories;
+using MarketWizard.Application.Interfaces;
 using MarketWizard.Domain.Entities;
 using Moq;
 

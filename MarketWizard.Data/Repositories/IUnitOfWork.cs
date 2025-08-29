@@ -1,15 +1,7 @@
-﻿using MarketWizard.Domain.Entities;
+﻿using MarketWizard.Application.Interfaces;
+using MarketWizard.Domain.Entities;
 
 namespace MarketWizard.Data.Repositories;
-
-public interface IUnitOfWork
-{
-    IGenericRepository<Portfolio> PortfolioRepository { get; }
-    
-    IGenericRepository<Asset> AssetRepository { get; }
-    
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-}
 
 public class UnitOfWork(MarketWizardContext context): IUnitOfWork
 {

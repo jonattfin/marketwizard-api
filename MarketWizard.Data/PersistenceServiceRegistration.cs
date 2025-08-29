@@ -1,5 +1,5 @@
-﻿using MarketWizard.Data.Repositories;
-using MarketWizard.Domain.Entities;
+﻿using MarketWizard.Application.Interfaces;
+using MarketWizard.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

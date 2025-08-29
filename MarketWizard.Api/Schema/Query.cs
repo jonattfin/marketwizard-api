@@ -1,4 +1,4 @@
-﻿using MarketWizard.Data.Repositories;
+﻿using MarketWizard.Application.Interfaces;
 using MarketWizard.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 

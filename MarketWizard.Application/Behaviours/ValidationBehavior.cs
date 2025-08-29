@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
-using MarketWizard.Application.Messaging.Abstractions;
+using MarketWizard.Application.Exceptions;
+using MarketWizard.Application.Interfaces;
 using MediatR;
 using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MarketWizard.Application.Messaging.Abstractions;
+namespace MarketWizard.Application.Interfaces;
 
 public interface IQuery<out TResponse> : IRequest<TResponse>
 {

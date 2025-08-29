@@ -1,6 +1,5 @@
 ﻿using HotChocolate.Subscriptions;
-using MarketWizard.Application.Messaging.Abstractions;
-using MarketWizard.Data.Repositories;
+using MarketWizard.Application.Interfaces;
 using MarketWizard.Domain.Entities;
 using MediatR;
 
