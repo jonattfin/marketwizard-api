@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Features.AddPortfolio;
+using MarketWizard.Application.Features.AddPortfolio.Dto;
 using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Domain.Entities;
 using Moq;
@@ -21,12 +22,12 @@ public class AddPortfolioCommandTests
         var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object);
 
         // Act
-        var act = () => sut.Handle(new AddPortfolioCommand(new Portfolio()), CancellationToken.None);
+        var act = () => sut.Handle(new AddPortfolioCommand(new PortfolioInput()), CancellationToken.None);
         
         // Assert
         await act.Should().NotThrowAsync<Exception>();
 
         topicEventSenderMock.Verify(
-            x => x.SendAsync("PortfolioAdded", It.IsAny<Portfolio>(), It.IsAny<CancellationToken>()), Times.Once);
+            x => x.SendAsync("PortfolioAdded", It.IsAny<PortfolioInput>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

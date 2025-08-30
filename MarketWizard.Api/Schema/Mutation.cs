@@ -1,9 +1,7 @@
 ﻿
-using Mapster;
 using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Domain.Entities;
-using MarketWizardApi.Dto.Inputs;
-using MarketWizardApi.Dto.Outputs;
+using MarketWizard.Application.Features.AddPortfolio.Dto;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +11,6 @@ public class Mutation
 {
     public async Task<PortfolioOutput> AddPortfolio(PortfolioInput portfolioInput, [FromServices] IMediator mediator)
     {
-        var portfolioEntity = portfolioInput.Adapt<Portfolio>();
-
-        var portfolioId = await mediator.Send(new AddPortfolioCommand(portfolioEntity));
-
-        return new PortfolioOutput() { Id = portfolioId };
+        return await mediator.Send(new AddPortfolioCommand(portfolioInput));
     }
 }
