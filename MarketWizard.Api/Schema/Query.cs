@@ -1,5 +1,6 @@
-﻿using MarketWizard.Application.Interfaces.Persistence;
-using MarketWizard.Domain.Entities;
+﻿using Mapster;
+using MarketWizard.Application.Dto;
+using MarketWizard.Application.Interfaces.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketWizardApi.Schema;
@@ -10,21 +11,29 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<Asset> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
+    public IQueryable<GetAssetDto> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
-        => unitOfWork.AssetRepository.GetAllWithPriceHistories(cancellationToken);
+    {
+        var assets = unitOfWork.AssetRepository.GetAllWithPriceHistories(cancellationToken);
+        return assets.ProjectToType<GetAssetDto>();
+    }
 
-    [UsePaging(IncludeTotalCount = true)]
+    [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting()]
-    public IQueryable<Portfolio> GetPortfolios([FromServices] IUnitOfWork unitOfWork,
+    public IQueryable<GetPortfolioDto> GetPortfolios([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
-        => unitOfWork.PortfolioRepository.Get(cancellationToken);
+    {
+        var portfolios = unitOfWork.PortfolioRepository.Get(cancellationToken);
+        return portfolios.ProjectToType<GetPortfolioDto>();
+    }
 
     [UseProjection]
-    public async Task<Portfolio?> GetPortfolioById([FromServices] IUnitOfWork unitOfWork, Guid portfolioId,
+    public async Task<GetPortfolioDto?> GetPortfolioById([FromServices] IUnitOfWork unitOfWork, Guid portfolioId,
         CancellationToken cancellationToken)
-        => await unitOfWork.PortfolioRepository.GetByIdWithRelatedEntities(portfolioId, cancellationToken);
-
+    {
+        var portfolio =  await unitOfWork.PortfolioRepository.GetByIdWithRelatedEntities(portfolioId, cancellationToken);
+        return portfolio?.Adapt<GetPortfolioDto>();
+    }
 }

@@ -1,7 +1,7 @@
 ﻿
+using MarketWizard.Application.Dto;
 using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Application.Features.AddPortfolio.Dto;
-
+using MarketWizard.Application.Features.DeletePortfolio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +9,13 @@ namespace MarketWizardApi.Schema;
 
 public class Mutation
 {
-    public async Task<PortfolioOutput> AddPortfolio(PortfolioInput portfolioInput, [FromServices] IMediator mediator)
+    public async Task<AddPortfolioOutputDto> AddPortfolio(AddPortfolioInputDto addPortfolioInputDto, [FromServices] IMediator mediator)
     {
-        return await mediator.Send(new AddPortfolioCommand(portfolioInput));
+        return await mediator.Send(new AddPortfolioCommand(addPortfolioInputDto));
+    }
+    
+    public async Task<bool> DeletePortfolio(Guid portfolioId, [FromServices] IMediator mediator)
+    {
+        return await mediator.Send(new DeletePortfolioCommand(portfolioId));
     }
 }

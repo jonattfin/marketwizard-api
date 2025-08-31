@@ -6,9 +6,9 @@ public class AddPortfolioCommandValidator: AbstractValidator<AddPortfolioCommand
 {
     public AddPortfolioCommandValidator()
     {
-        RuleFor(x => x.Portfolio).NotNull();
-        RuleFor(x => x.Portfolio.Name).NotEmpty().MinimumLength(3);
-        RuleFor(x => x.Portfolio.Description).NotEmpty().MinimumLength(10);
-        RuleFor(x => x.Portfolio.UserId).NotEmpty();
+        RuleFor(x => x.AddPortfolio).NotNull();
+        RuleFor(x => x.AddPortfolio.Name).NotEmpty().MinimumLength(3);
+        RuleFor(x => x.AddPortfolio.Description).NotEmpty().MinimumLength(10);
+        RuleFor(x => x.AddPortfolio.UserId).NotEmpty();
     }
 }

@@ -30,8 +30,8 @@ builder.Services
     .AddProjections()
     .AddSorting()
     .AddQueryType<Query>()
-    .AddMutationType<Mutation>()
-    .AddSubscriptionType<Subscription>();
+    .AddMutationType<Mutation>();
+    // .AddSubscriptionType<Subscription>();
 
 builder.Services.AddPersistenceServices(builder.Configuration)
     .AddApplicationServices(builder.Configuration);

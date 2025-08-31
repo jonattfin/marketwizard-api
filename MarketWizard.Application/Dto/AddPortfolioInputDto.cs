@@ -1,6 +1,6 @@
-﻿namespace MarketWizard.Application.Features.AddPortfolio.Dto;
+﻿namespace MarketWizard.Application.Dto;
 
-public class PortfolioInput
+public class AddPortfolioInputDto
 {
     public string Name { get; set; }
     
