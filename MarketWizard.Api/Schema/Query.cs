@@ -25,7 +25,7 @@ public class Query
     public IQueryable<GetPortfolioDto> GetPortfolios([FromServices] IUnitOfWork unitOfWork,
         CancellationToken cancellationToken)
     {
-        var portfolios = unitOfWork.PortfolioRepository.Get(cancellationToken);
+        var portfolios = unitOfWork.PortfolioRepository.GetAllWithRelatedEntities(cancellationToken);
         return portfolios.ProjectToType<GetPortfolioDto>();
     }
 

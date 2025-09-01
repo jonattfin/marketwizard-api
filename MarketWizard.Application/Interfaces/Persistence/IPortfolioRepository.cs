@@ -4,5 +4,7 @@ namespace MarketWizard.Application.Interfaces.Persistence;
 
 public interface IPortfolioRepository : IGenericRepository<Portfolio>
 {
+    public IQueryable<Portfolio> GetAllWithRelatedEntities(CancellationToken cancellationToken = default);
+    
     public Task<Portfolio?> GetByIdWithRelatedEntities(object id, CancellationToken cancellationToken = default);
 }

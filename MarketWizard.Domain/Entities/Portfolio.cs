@@ -35,7 +35,7 @@ public partial class Portfolio
             
             foreach (var portfolioAsset in PortfolioAssets)
             {
-                if (portfolioAsset.Asset.LastPrice is null) 
+                if (portfolioAsset?.Asset?.LastPrice is null) 
                     continue;
                 
                 unrealizedGain += (portfolioAsset.Asset.LastPrice.Value - portfolioAsset.PricePerShare) * portfolioAsset.NumberOfShares;

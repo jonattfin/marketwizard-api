@@ -9,9 +9,9 @@ namespace MarketWizardApi.Schema;
 
 public class Mutation
 {
-    public async Task<AddPortfolioOutputDto> AddPortfolio(AddPortfolioInputDto addPortfolioInputDto, [FromServices] IMediator mediator)
+    public async Task<AddPortfolioOutputDto> AddPortfolio(AddPortfolioInputDto portfolioInput, [FromServices] IMediator mediator)
     {
-        return await mediator.Send(new AddPortfolioCommand(addPortfolioInputDto));
+        return await mediator.Send(new AddPortfolioCommand(portfolioInput));
     }
     
     public async Task<bool> DeletePortfolio(Guid portfolioId, [FromServices] IMediator mediator)
