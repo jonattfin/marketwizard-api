@@ -30,6 +30,7 @@
     <ItemGroup>
       <ProjectReference Include="..\MarketWizard.Application\MarketWizard.Application.csproj" />
       <ProjectReference Include="..\MarketWizard.Data\MarketWizard.Data.csproj" />
+      <ProjectReference Include="..\MarketWizard.Finnhub\MarketWizard.Finnhub.csproj" />
     </ItemGroup>
 
 </Project>

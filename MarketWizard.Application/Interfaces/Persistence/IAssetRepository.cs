@@ -4,5 +4,7 @@ namespace MarketWizard.Application.Interfaces.Persistence;
 
 public interface IWatchlistRepository : IGenericRepository<Watchlist>
 {
+    Task<IEnumerable<Watchlist>> GetAllWithAssets(CancellationToken cancellationToken);
+    
     Task<IEnumerable<Asset>> GetAllWithPriceHistories(Guid userId, CancellationToken cancellationToken);
 }
