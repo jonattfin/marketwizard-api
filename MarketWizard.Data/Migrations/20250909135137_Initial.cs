@@ -12,7 +12,7 @@ namespace MarketWizard.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Assets",
+                name: "Asset",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -23,11 +23,11 @@ namespace MarketWizard.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.PrimaryKey("PK_Asset", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -36,7 +36,7 @@ namespace MarketWizard.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,16 +45,16 @@ namespace MarketWizard.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AssetId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetPriceHistory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AssetPriceHistory_Assets_AssetId",
+                        name: "FK_AssetPriceHistory_Asset_AssetId",
                         column: x => x.AssetId,
-                        principalTable: "Assets",
+                        principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -73,9 +73,27 @@ namespace MarketWizard.Data.Migrations
                 {
                     table.PrimaryKey("PK_Portfolios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Portfolios_User_UserId",
+                        name: "FK_Portfolios_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Watchlists",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Watchlists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Watchlists_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -95,9 +113,9 @@ namespace MarketWizard.Data.Migrations
                 {
                     table.PrimaryKey("PK_PortfolioAsset", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PortfolioAsset_Assets_AssetId",
+                        name: "FK_PortfolioAsset_Asset_AssetId",
                         column: x => x.AssetId,
-                        principalTable: "Assets",
+                        principalTable: "Asset",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -107,10 +125,39 @@ namespace MarketWizard.Data.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AssetWatchlist",
+                columns: table => new
+                {
+                    AssetsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    WatchlistsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetWatchlist", x => new { x.AssetsId, x.WatchlistsId });
+                    table.ForeignKey(
+                        name: "FK_AssetWatchlist_Asset_AssetsId",
+                        column: x => x.AssetsId,
+                        principalTable: "Asset",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AssetWatchlist_Watchlists_WatchlistsId",
+                        column: x => x.WatchlistsId,
+                        principalTable: "Watchlists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AssetPriceHistory_AssetId",
                 table: "AssetPriceHistory",
                 column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetWatchlist_WatchlistsId",
+                table: "AssetWatchlist",
+                column: "WatchlistsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PortfolioAsset_AssetId",
@@ -126,6 +173,11 @@ namespace MarketWizard.Data.Migrations
                 name: "IX_Portfolios_UserId",
                 table: "Portfolios",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watchlists_UserId",
+                table: "Watchlists",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -135,16 +187,22 @@ namespace MarketWizard.Data.Migrations
                 name: "AssetPriceHistory");
 
             migrationBuilder.DropTable(
+                name: "AssetWatchlist");
+
+            migrationBuilder.DropTable(
                 name: "PortfolioAsset");
 
             migrationBuilder.DropTable(
-                name: "Assets");
+                name: "Watchlists");
+
+            migrationBuilder.DropTable(
+                name: "Asset");
 
             migrationBuilder.DropTable(
                 name: "Portfolios");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

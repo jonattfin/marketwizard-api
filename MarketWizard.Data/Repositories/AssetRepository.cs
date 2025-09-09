@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
 
-public class AssetRepository(MarketWizardContext context) : GenericRepository<Asset>(context), IAssetRepository
+public class WatchlistRepository(MarketWizardContext context) : GenericRepository<Watchlist>(context), IWatchlistRepository
 {
     private readonly MarketWizardContext _context = context;
 
-    public IQueryable<Asset> GetAllWithPriceHistories(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Asset>> GetAllWithPriceHistories(Guid userId, CancellationToken cancellationToken)
     {
-        return _context.Assets.OrderByDescending(a => a.Name)
-            .Include(a => a.PriceHistories);
+        var watchlist = await context.Watchlists.Include(watchlist => watchlist.Assets)
+            .FirstAsync(x => x.UserId == userId, cancellationToken);
+
+        return watchlist?.Assets ?? [];
     }
 }

@@ -17,7 +17,7 @@ public partial class Portfolio : IEntity
     
     public string ImageUrl { get; set; }
     
-    public IEnumerable<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
+    public ICollection<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
     
 }
 

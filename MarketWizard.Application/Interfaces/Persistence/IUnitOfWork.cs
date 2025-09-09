@@ -4,7 +4,7 @@ public interface IUnitOfWork
 {
     IPortfolioRepository PortfolioRepository { get; }
     
-    IAssetRepository AssetRepository { get; }
+    IWatchlistRepository WatchlistRepository { get; }
     
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

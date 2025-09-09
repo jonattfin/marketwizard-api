@@ -7,8 +7,8 @@ public class MarketWizardContext(DbContextOptions<MarketWizardContext> options) 
 {
     public DbSet<User> Users { get; set; }
     
-    public DbSet<Asset> Assets { get; set; }
-    
     public DbSet<Portfolio> Portfolios { get; set; }
+    
+    public DbSet<Watchlist> Watchlists { get; set; }
     
 }

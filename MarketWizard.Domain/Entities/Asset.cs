@@ -22,7 +22,9 @@ public partial class Asset : IEntity
     
     public AssetType Type { get; set; }
     
-    public IEnumerable<AssetPriceHistory> PriceHistories { get; set; } = new List<AssetPriceHistory>();
+    public ICollection<Watchlist> Watchlists { get; set; } = new List<Watchlist>();
+    
+    public ICollection<AssetPriceHistory> PriceHistories { get; set; } = new List<AssetPriceHistory>();
 }
 
 public partial class Asset

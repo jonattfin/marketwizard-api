@@ -22,7 +22,22 @@ namespace MarketWizard.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MarketWizard.Domain.Asset", b =>
+            modelBuilder.Entity("AssetWatchlist", b =>
+                {
+                    b.Property<Guid>("AssetsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("WatchlistsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("AssetsId", "WatchlistsId");
+
+                    b.HasIndex("WatchlistsId");
+
+                    b.ToTable("AssetWatchlist");
+                });
+
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Asset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,10 +60,10 @@ namespace MarketWizard.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assets");
+                    b.ToTable("Asset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.AssetPriceHistory", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.AssetPriceHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +85,7 @@ namespace MarketWizard.Data.Migrations
                     b.ToTable("AssetPriceHistory");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Portfolio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,7 +113,7 @@ namespace MarketWizard.Data.Migrations
                     b.ToTable("Portfolios");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.PortfolioAsset", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.PortfolioAsset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +143,7 @@ namespace MarketWizard.Data.Migrations
                     b.ToTable("PortfolioAsset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.User", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,9 +162,40 @@ namespace MarketWizard.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.AssetPriceHistory", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Watchlist", b =>
                 {
-                    b.HasOne("MarketWizard.Domain.Asset", "Asset")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Watchlists");
+                });
+
+            modelBuilder.Entity("AssetWatchlist", b =>
+                {
+                    b.HasOne("MarketWizard.Domain.Entities.Asset", null)
+                        .WithMany()
+                        .HasForeignKey("AssetsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MarketWizard.Domain.Entities.Watchlist", null)
+                        .WithMany()
+                        .HasForeignKey("WatchlistsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MarketWizard.Domain.Entities.AssetPriceHistory", b =>
+                {
+                    b.HasOne("MarketWizard.Domain.Entities.Asset", "Asset")
                         .WithMany("PriceHistories")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -158,9 +204,9 @@ namespace MarketWizard.Data.Migrations
                     b.Navigation("Asset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Portfolio", b =>
                 {
-                    b.HasOne("MarketWizard.Domain.User", "User")
+                    b.HasOne("MarketWizard.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -169,27 +215,38 @@ namespace MarketWizard.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.PortfolioAsset", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.PortfolioAsset", b =>
                 {
-                    b.HasOne("MarketWizard.Domain.Asset", "Asset")
+                    b.HasOne("MarketWizard.Domain.Entities.Asset", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MarketWizard.Domain.Portfolio", null)
+                    b.HasOne("MarketWizard.Domain.Entities.Portfolio", null)
                         .WithMany("PortfolioAssets")
                         .HasForeignKey("PortfolioId");
 
                     b.Navigation("Asset");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.Asset", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Watchlist", b =>
+                {
+                    b.HasOne("MarketWizard.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Asset", b =>
                 {
                     b.Navigation("PriceHistories");
                 });
 
-            modelBuilder.Entity("MarketWizard.Domain.Portfolio", b =>
+            modelBuilder.Entity("MarketWizard.Domain.Entities.Portfolio", b =>
                 {
                     b.Navigation("PortfolioAssets");
                 });

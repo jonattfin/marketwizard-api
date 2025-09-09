@@ -11,11 +11,11 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<GetAssetDto> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
+    public async Task<IEnumerable<GetAssetDto>> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork, Guid userId,
         CancellationToken cancellationToken)
     {
-        var assets = unitOfWork.AssetRepository.GetAllWithPriceHistories(cancellationToken);
-        return assets.ProjectToType<GetAssetDto>();
+        var assets = await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(userId, cancellationToken);
+        return assets.Adapt<IEnumerable<GetAssetDto>>();
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]

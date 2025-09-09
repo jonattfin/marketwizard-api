@@ -29,4 +29,8 @@
       <ProjectReference Include="..\MarketWizard.Domain\MarketWizard.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>
