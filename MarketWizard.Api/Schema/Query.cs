@@ -7,7 +7,7 @@ namespace MarketWizardApi.Schema;
 
 public class Query
 {
-    [UsePaging]
+    [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
