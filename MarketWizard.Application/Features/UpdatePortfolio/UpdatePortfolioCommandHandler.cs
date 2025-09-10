@@ -24,7 +24,7 @@ public class UpdatePortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender se
         request.UpdatePortfolio.Adapt(portfolioEntity);
         
         unitOfWork.PortfolioRepository.Update(portfolioEntity);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
         
         await sender.SendAsync("PortfolioUpdated", request.UpdatePortfolio, cancellationToken);
 

@@ -1,8 +1,11 @@
 ﻿using HotChocolate.Subscriptions;
 using MarketWizard.Application.Interfaces.Infra;
 using MarketWizard.Application.Interfaces.Persistence;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace MarketWizardApi.Services;
+namespace MarketWizard.Finnhub.Services;
 
 public class StockPriceBackgroundService(
     ILogger<StockPriceBackgroundService> logger,
@@ -24,7 +27,7 @@ public class StockPriceBackgroundService(
             var stockQuotes =  await finnhubService.GetMultipleStockQuote(symbols.ToList());
             await eventSender.SendAsync("StocksPriceUpdated", stockQuotes, cancellationToken);
 
-            await Task.Delay(TimeSpan.FromSeconds(20), cancellationToken);
+            await Task.Delay(TimeSpan.FromSeconds(60), cancellationToken);
         }
     }
 }

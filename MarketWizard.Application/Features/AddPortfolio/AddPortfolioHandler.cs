@@ -18,7 +18,7 @@ public class AddPortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender sende
         var portfolioEntity = request.AddPortfolio.Adapt<Portfolio>();
         
         await unitOfWork.PortfolioRepository.Insert(portfolioEntity, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
         
         await sender.SendAsync("PortfolioAdded", request.AddPortfolio, cancellationToken);
 

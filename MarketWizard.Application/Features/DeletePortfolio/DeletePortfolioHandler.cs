@@ -14,7 +14,7 @@ public class DeletePortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender se
     public async Task<bool> Handle(DeletePortfolioCommand request, CancellationToken cancellationToken)
     {
         await unitOfWork.PortfolioRepository.Delete(request.PortfolioId, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
         
         // TODO - Send event to subscribers
         // await sender.SendAsync("PortfolioDeleted", request.PortfolioId, cancellationToken);

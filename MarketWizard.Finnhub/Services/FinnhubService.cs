@@ -4,7 +4,7 @@ using MarketWizard.Application.Interfaces.Infra;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Finnhub;
+namespace MarketWizard.Finnhub.Services;
 
 public class FinnhubService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<FinnhubService> logger)
     : IFinnhubService
