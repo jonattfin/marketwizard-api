@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MarketWizard.Finnhub.Services;
 
-public class FinnhubService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<FinnhubService> logger)
+public class FinnhubService(HttpClient httpClient, IConfiguration configuration, ILogger<FinnhubService> logger)
     : IFinnhubService
 {
     public async Task<StockQuote?> GetStockQuote(string symbol)
@@ -14,12 +14,9 @@ public class FinnhubService(IHttpClientFactory httpClientFactory, IConfiguration
         try
         {
             var finnhubSection = configuration.GetSection("Finnhub");
-
-            using var client = httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(finnhubSection.GetValue<string>("BaseUrl"));
             
             var response =
-                await client.GetAsync($"quote?symbol={symbol}&token={finnhubSection.GetValue<string>("Token")}");
+                await httpClient.GetAsync($"quote?symbol={symbol}&token={finnhubSection.GetValue<string>("Token")}");
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
