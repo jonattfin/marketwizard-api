@@ -5,6 +5,6 @@ namespace MarketWizardApi.Schema;
 public class Subscription
 {
     [Subscribe]
-    [Topic("StockPriceUpdated")]
-    public StockQuote OnStockPriceUpdated([EventMessage] StockQuote stockQuote) => stockQuote;
+    [Topic("StocksPriceUpdated")]
+    public List<StockQuote> OnStockPriceUpdated([EventMessage] List<StockQuote> stockQuote) => stockQuote;
 }
