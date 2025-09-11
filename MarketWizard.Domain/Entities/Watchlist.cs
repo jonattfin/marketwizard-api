@@ -1,8 +1,8 @@
-﻿using MarketWizard.Domain.Entities.Interfaces;
+﻿using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
-public class Watchlist : IEntity
+public class Watchlist : BaseEntity
 {
     public Guid Id { get; set; }
     

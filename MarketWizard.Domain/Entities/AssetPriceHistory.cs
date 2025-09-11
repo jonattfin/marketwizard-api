@@ -1,11 +1,9 @@
-﻿using MarketWizard.Domain.Entities.Interfaces;
+﻿using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
-public class AssetPriceHistory : IEntity
+public class AssetPriceHistory : BaseEntity
 {
-    public Guid Id { get; set; }
-    
     public Asset Asset { get; set; }
     
     public Guid AssetId { get; set; }

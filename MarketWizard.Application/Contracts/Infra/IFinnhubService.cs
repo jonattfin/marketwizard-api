@@ -1,10 +1,8 @@
 ﻿using MarketWizard.Application.Dto;
 
-namespace MarketWizard.Application.Interfaces.Infra;
+namespace MarketWizard.Application.Contracts.Infra;
 
 public interface IFinnhubService
 {
-    Task<StockQuote?> GetStockQuote(string symbol);
-    
     Task<List<StockQuote>> GetMultipleStockQuote(List<string> symbols);
 }

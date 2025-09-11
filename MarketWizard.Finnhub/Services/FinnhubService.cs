@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
+using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Application.Dto;
-using MarketWizard.Application.Interfaces.Infra;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +9,7 @@ namespace MarketWizard.Finnhub.Services;
 public class FinnhubService(HttpClient httpClient, IConfiguration configuration, ILogger<FinnhubService> logger)
     : IFinnhubService
 {
-    public async Task<StockQuote?> GetStockQuote(string symbol)
+    private async Task<StockQuote?> GetStockQuote(string symbol)
     {
         try
         {
@@ -47,9 +47,9 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
         }
     }
 
-    public async Task<List<StockQuote?>> GetMultipleStockQuote(List<string> symbols)
+    public async Task<List<StockQuote>> GetMultipleStockQuote(List<string> symbols)
     {
-        var stockQuotes = new List<StockQuote?>();
+        var stockQuotes = new List<StockQuote>();
         foreach (var symbol in symbols)
         {
             var stockQuote = await GetStockQuote(symbol);

@@ -1,11 +1,9 @@
-﻿using MarketWizard.Domain.Entities.Interfaces;
+﻿using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
-public class User : IEntity
+public class User : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string Email { get; set; }

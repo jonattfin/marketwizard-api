@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using MarketWizard.Domain.Entities.Interfaces;
+using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
-public partial class Portfolio : IEntity
+public partial class Portfolio : BaseEntity
 {
-    public Guid Id { get; set; }
-    
     public User User { get; set; }
     
     public Guid UserId { get; set; }

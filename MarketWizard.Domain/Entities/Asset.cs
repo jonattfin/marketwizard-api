@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using MarketWizard.Domain.Entities.Interfaces;
+using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
@@ -10,10 +10,8 @@ public enum AssetType
     Crypto
 }
 
-public partial class Asset : IEntity
+public partial class Asset : BaseEntity
 {
-    public Guid Id { get; set; }
-    
     public string Symbol { get; set; }
     
     public string Name { get; set; }

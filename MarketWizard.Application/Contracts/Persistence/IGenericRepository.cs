@@ -1,6 +1,8 @@
-﻿namespace MarketWizard.Application.Interfaces.Persistence;
+﻿using MarketWizard.Domain.Entities.Common;
 
-public interface IGenericRepository<TEntity> where TEntity : class
+namespace MarketWizard.Application.Contracts.Persistence;
+
+public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 {
     IQueryable<TEntity> Get(CancellationToken cancellationToken = default);
     

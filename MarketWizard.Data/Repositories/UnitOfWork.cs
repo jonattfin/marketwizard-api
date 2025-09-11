@@ -1,4 +1,4 @@
-﻿using MarketWizard.Application.Interfaces.Persistence;
+﻿using MarketWizard.Application.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MarketWizard.Data.Repositories;
@@ -17,10 +17,14 @@ public class UnitOfWork: IUnitOfWork, IDisposable
         
         PortfolioRepository = new PortfolioRepository(_context);
         WatchlistRepository = new WatchlistRepository(_context);
+        UserRepository = new UserRepository(_context);
     }
     
     public IPortfolioRepository PortfolioRepository { get; }
+    
     public IWatchlistRepository WatchlistRepository { get; }
+    
+    public IUserRepository UserRepository { get; }
 
     public async Task Commit(CancellationToken cancellationToken = default)
     {

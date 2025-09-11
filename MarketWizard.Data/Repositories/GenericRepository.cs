@@ -1,9 +1,10 @@
-﻿using MarketWizard.Application.Interfaces.Persistence;
+﻿using MarketWizard.Application.Contracts.Persistence;
+using MarketWizard.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
 
-public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 

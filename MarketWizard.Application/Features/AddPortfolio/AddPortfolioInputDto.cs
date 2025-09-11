@@ -1,4 +1,4 @@
-﻿namespace MarketWizard.Application.Dto;
+﻿namespace MarketWizard.Application.Features.AddPortfolio;
 
 public class AddPortfolioInputDto
 {

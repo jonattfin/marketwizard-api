@@ -1,6 +1,6 @@
 ﻿using Mapster;
+using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Dto;
-using MarketWizard.Application.Interfaces.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketWizardApi.Schema;

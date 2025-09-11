@@ -1,4 +1,4 @@
-﻿using MarketWizard.Domain.Entities.Interfaces;
+﻿using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
@@ -8,10 +8,8 @@ public enum PortfolioOperationType
     Sell
 }
 
-public class PortfolioAsset : IEntity
+public class PortfolioAsset : BaseEntity
 {
-    public Guid Id { get; set; }
-    
     public Asset Asset { get; set; }
     
     public Guid AssetId { get; set; }

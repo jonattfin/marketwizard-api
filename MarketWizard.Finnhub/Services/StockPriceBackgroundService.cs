@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Subscriptions;
-using MarketWizard.Application.Interfaces.Infra;
-using MarketWizard.Application.Interfaces.Persistence;
+using MarketWizard.Application.Contracts.Infra;
+using MarketWizard.Application.Contracts.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

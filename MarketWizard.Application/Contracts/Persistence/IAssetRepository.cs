@@ -1,6 +1,6 @@
 ﻿using MarketWizard.Domain.Entities;
 
-namespace MarketWizard.Application.Interfaces.Persistence;
+namespace MarketWizard.Application.Contracts.Persistence;
 
 public interface IWatchlistRepository : IGenericRepository<Watchlist>
 {

@@ -1,5 +1,4 @@
-﻿
-using MarketWizard.Application.Interfaces.Infra;
+﻿using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Finnhub.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

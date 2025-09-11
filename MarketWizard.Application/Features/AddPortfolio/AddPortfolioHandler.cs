@@ -1,8 +1,8 @@
 ﻿using HotChocolate.Subscriptions;
 using Mapster;
+using MarketWizard.Application.Contracts.CQRS;
+using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Dto;
-using MarketWizard.Application.Interfaces.Cqrs;
-using MarketWizard.Application.Interfaces.Persistence;
 using MarketWizard.Domain.Entities;
 using MediatR;
 

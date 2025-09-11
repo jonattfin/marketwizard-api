@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using HotChocolate.Subscriptions;
+using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Dto;
 using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Application.Interfaces.Persistence;
 using Moq;
 
 namespace MarketWizard.Application.Tests;
