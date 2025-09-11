@@ -6,26 +6,27 @@ namespace MarketWizard.Data.Repositories;
 
 public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    protected readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
 
     public virtual IQueryable<TEntity> Get(CancellationToken cancellationToken = default)
     {
-        return _dbSet.AsQueryable(); // TODO Add cancellation token
+        return DbSet.AsNoTracking(); // TODO Add cancellation token
     }
 
-    public virtual async Task<TEntity?> GetById(object id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FindAsync([id], cancellationToken);
+        return await DbSet.AsNoTracking()
+            .FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
     }
 
     public virtual async Task Insert(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await _dbSet.AddAsync(entity, cancellationToken);
+        await DbSet.AddAsync(entity, cancellationToken);
     }
 
-    public virtual async Task Delete(object id, CancellationToken cancellationToken = default)
+    public virtual async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {
-        var entityToDelete = await _dbSet.FindAsync([id], cancellationToken);
+        var entityToDelete = await GetById(id, cancellationToken);
         if (entityToDelete != null)
             Delete(entityToDelete);
     }
@@ -34,15 +35,15 @@ public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericR
     {
         if (context.Entry(entityToDelete).State == EntityState.Detached)
         {
-            _dbSet.Attach(entityToDelete);
+            DbSet.Attach(entityToDelete);
         }
 
-        _dbSet.Remove(entityToDelete);
+        DbSet.Remove(entityToDelete);
     }
 
     public virtual void Update(TEntity entityToUpdate)
     {
-        _dbSet.Attach(entityToUpdate);
+        DbSet.Attach(entityToUpdate);
         context.Entry(entityToUpdate).State = EntityState.Modified;
     }
 }

@@ -6,11 +6,9 @@ namespace MarketWizard.Data.Repositories;
 
 public class PortfolioRepository(MarketWizardContext context) : GenericRepository<Portfolio>(context), IPortfolioRepository
 {
-    private readonly MarketWizardContext _context = context;
-
     public IQueryable<Portfolio> GetAllWithRelatedEntities(CancellationToken cancellationToken = default)
     {
-        return _context.Portfolios
+        return DbSet
             .Include(p => p.PortfolioAssets)
             .ThenInclude(pa => pa.Asset)
             .ThenInclude(pa => pa.PriceHistories);
@@ -18,7 +16,7 @@ public class PortfolioRepository(MarketWizardContext context) : GenericRepositor
 
     public async Task<Portfolio?> GetByIdWithRelatedEntities(object id, CancellationToken cancellationToken = default)
     {
-        return await _context.Portfolios
+        return await DbSet
             .Include(p => p.PortfolioAssets)
             .ThenInclude(pa => pa.Asset)
             .ThenInclude(pa => pa.PriceHistories)
