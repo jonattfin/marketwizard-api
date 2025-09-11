@@ -2,7 +2,6 @@
 using Mapster;
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Dto;
 using MarketWizard.Domain.Entities;
 using MediatR;
 
