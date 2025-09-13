@@ -33,8 +33,4 @@
       <ProjectReference Include="..\MarketWizard.Finnhub\MarketWizard.Finnhub.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services\" />
-    </ItemGroup>
-
 </Project>
