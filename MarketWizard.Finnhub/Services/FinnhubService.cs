@@ -9,17 +9,17 @@ namespace MarketWizard.Finnhub.Services;
 public class FinnhubService(HttpClient httpClient, IConfiguration configuration, ILogger<FinnhubService> logger)
     : IFinnhubService
 {
-    private async Task<StockQuoteDto?> GetStockQuote(string symbol)
+    public async Task<StockQuoteDto?> GetStockQuote(string symbol, CancellationToken cancellationToken = default)
     {
         try
         {
             var finnhubSection = configuration.GetSection("Finnhub");
             
             var response =
-                await httpClient.GetAsync($"quote?symbol={symbol}&token={finnhubSection.GetValue<string>("Token")}");
+                await httpClient.GetAsync($"quote?symbol={symbol}&token={finnhubSection.GetValue<string>("Token")}", cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var jsonResponse = await response.Content.ReadAsStringAsync(cancellationToken);
 
             var stockData = JsonSerializer.Deserialize<Dictionary<string, decimal>>(jsonResponse);
 
@@ -47,18 +47,17 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
         }
     }
 
-    public async Task<List<StockQuoteDto>> GetMultipleStockQuote(List<string> symbols)
+    public async Task<ICollection<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
     {
         var stockQuotes = new List<StockQuoteDto>();
         foreach (var symbol in symbols)
         {
-            var stockQuote = await GetStockQuote(symbol);
+            var stockQuote = await GetStockQuote(symbol, cancellationToken);
             if (stockQuote != null)
             {
                 stockQuotes.Add(stockQuote);
             }
         }
-
         return stockQuotes;
     }
 }

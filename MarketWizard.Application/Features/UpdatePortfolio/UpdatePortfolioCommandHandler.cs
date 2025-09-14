@@ -10,7 +10,9 @@ namespace MarketWizard.Application.Features.UpdatePortfolio;
 
 public record UpdatePortfolioCommand(UpdatePortfolioInputDto UpdatePortfolio) : ICommand<UpdatePortfolioOutputDto>;
 
-public class UpdatePortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender sender, ILogger<UpdatePortfolioHandler> logger)
+public class UpdatePortfolioHandler(
+    IUnitOfWork unitOfWork,
+    ITopicEventSender sender)
     : IRequestHandler<UpdatePortfolioCommand, UpdatePortfolioOutputDto>
 {
     public async Task<UpdatePortfolioOutputDto> Handle(UpdatePortfolioCommand request,
@@ -26,20 +28,10 @@ public class UpdatePortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender se
 
         request.UpdatePortfolio.Adapt(portfolioEntity);
 
-        try
-        {
-            unitOfWork.PortfolioRepository.Update(portfolioEntity);
-            await unitOfWork.Commit(cancellationToken);
+        unitOfWork.PortfolioRepository.Update(portfolioEntity);
+        await unitOfWork.Commit(cancellationToken);
 
-            await sender.SendAsync("PortfolioUpdated", request.UpdatePortfolio.Id, cancellationToken);
-        }
-        catch (Exception e)
-        {
-            await unitOfWork.Rollback(cancellationToken);
-            
-            logger.LogError(e, "Error updating portfolio");
-            throw;
-        }
+        await sender.SendAsync("PortfolioUpdated", request.UpdatePortfolio.Id, cancellationToken);
 
 
         return new UpdatePortfolioOutputDto() { Id = request.UpdatePortfolio.Id };

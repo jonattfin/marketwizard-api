@@ -15,4 +15,6 @@ public class AssetDto
     public AssetType? Type { get; set; }
     
     public double? LastPrice { get; set; }
+    
+    public StockQuoteDto? Quote { get; set; }
 }

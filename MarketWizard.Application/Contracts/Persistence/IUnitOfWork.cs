@@ -9,6 +9,4 @@ public interface IUnitOfWork
     IUserRepository UserRepository { get; }
     
     Task Commit(CancellationToken cancellationToken);
-    
-    Task Rollback(CancellationToken cancellationToken);
 }

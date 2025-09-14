@@ -16,10 +16,9 @@ public class AddPortfolioCommandTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var repositoryMock = new Mock<IPortfolioRepository>();
         var topicEventSenderMock = new Mock<ITopicEventSender>();
-        var loggerMock = new Mock<ILogger<AddPortfolioHandler>>();
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(repositoryMock.Object);
-        var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object, loggerMock.Object);
+        var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object);
 
         // Act
         var act = () => sut.Handle(new AddPortfolioCommand(new AddPortfolioInputDto()), CancellationToken.None);

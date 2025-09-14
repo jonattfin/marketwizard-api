@@ -4,5 +4,7 @@ namespace MarketWizard.Application.Contracts.Infra;
 
 public interface IFinnhubService
 {
-    Task<List<StockQuoteDto>> GetMultipleStockQuote(List<string> symbols);
+    Task<StockQuoteDto?> GetStockQuote(string symbol, CancellationToken cancellationToken = default);
+    
+    Task<ICollection<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default);
 }

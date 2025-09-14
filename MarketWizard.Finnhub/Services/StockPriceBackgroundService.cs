@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 namespace MarketWizard.Finnhub.Services;
 
 public class StockPriceBackgroundService(
-    ILogger<StockPriceBackgroundService> logger,
     IFinnhubService finnhubService,
     ITopicEventSender eventSender,
     IServiceProvider serviceProvider)
@@ -23,8 +22,8 @@ public class StockPriceBackgroundService(
         {
             var watchlist = await unitOfWork.WatchlistRepository.GetAllWithAssets(cancellationToken);
             var symbols = watchlist.SelectMany(watchlistItem => watchlistItem.Assets).Distinct().Select(x => x.Symbol);
-            
-            var stockQuotes =  await finnhubService.GetMultipleStockQuote(symbols.ToList());
+
+            var stockQuotes = await finnhubService.GetMultipleStockQuote(symbols.ToList(), cancellationToken);
             await eventSender.SendAsync("StocksPriceUpdated", stockQuotes, cancellationToken);
 
             await Task.Delay(TimeSpan.FromSeconds(60), cancellationToken);

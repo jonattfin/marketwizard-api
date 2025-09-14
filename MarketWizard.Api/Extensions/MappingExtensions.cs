@@ -6,9 +6,18 @@ namespace MarketWizardApi.Extensions;
 
 public static class MappingExtensions
 {
-    public static IEnumerable<AssetDto> ToAssetDtos(this IEnumerable<Asset> assets)
+    public static IEnumerable<AssetDto> ToAssetDtos(this IEnumerable<Asset> assets, IEnumerable<StockQuoteDto> quotes)
     {
-        return assets.Adapt<IEnumerable<AssetDto>>();
+        return assets.Select(asset => new AssetDto()
+        {
+            Id = asset.Id,
+            Description = asset.Description,
+            LastPrice = asset.LastPrice,
+            Name = asset.Name,
+            Symbol = asset.Symbol,
+            Type = asset.Type,
+            Quote = quotes.FirstOrDefault(x => x.Symbol == asset.Symbol)
+        });
     }
     
     public static IQueryable<PortfolioSummaryDto> ToSummaryDtos(this IQueryable<Portfolio> portfolios)

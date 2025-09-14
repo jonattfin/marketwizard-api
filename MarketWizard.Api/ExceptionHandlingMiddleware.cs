@@ -52,7 +52,7 @@ internal sealed class ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddl
 
     private static IReadOnlyDictionary<string, string[]> GetErrors(Exception exception)
     {
-        IReadOnlyDictionary<string, string[]> errors = null;
+        IReadOnlyDictionary<string, string[]> errors = new Dictionary<string, string[]>();
 
         if (exception is CustomValidationException validationException)
         {

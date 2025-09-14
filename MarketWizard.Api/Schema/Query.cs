@@ -1,7 +1,7 @@
 ﻿using Mapster;
+using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Dto;
-using MarketWizard.Domain.Entities;
 using MarketWizardApi.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +13,14 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork, Guid userId,
-        CancellationToken cancellationToken)
+    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
+        [FromServices] IFinnhubService finnhubService,
+        Guid userId, CancellationToken cancellationToken)
     {
-        var assets = await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(userId, cancellationToken);
+        var assets = (await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(userId, cancellationToken)).ToList();
+        var stockQuotes = await finnhubService.GetMultipleStockQuote(assets.Select(x => x.Symbol), cancellationToken);
 
-        return assets.ToAssetDtos();
+        return assets.ToAssetDtos(stockQuotes);
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]

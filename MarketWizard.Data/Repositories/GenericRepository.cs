@@ -10,7 +10,7 @@ public class GenericRepository<TEntity>(MarketWizardContext context) : IGenericR
 
     public virtual IQueryable<TEntity> Get(CancellationToken cancellationToken = default)
     {
-        return DbSet.AsNoTracking(); // TODO Add cancellation token
+        return DbSet;
     }
 
     public virtual async Task<TEntity?> GetById(Guid id, CancellationToken cancellationToken = default)
