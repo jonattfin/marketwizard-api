@@ -9,7 +9,7 @@ namespace MarketWizard.Finnhub.Services;
 public class FinnhubService(HttpClient httpClient, IConfiguration configuration, ILogger<FinnhubService> logger)
     : IFinnhubService
 {
-    private async Task<StockQuote?> GetStockQuote(string symbol)
+    private async Task<StockQuoteDto?> GetStockQuote(string symbol)
     {
         try
         {
@@ -28,7 +28,7 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
                 return null;
             }
 
-            return new StockQuote
+            return new StockQuoteDto
             {
                 Symbol = symbol,
                 CurrentPrice = stockData.GetValueOrDefault("c"),
@@ -47,9 +47,9 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
         }
     }
 
-    public async Task<List<StockQuote>> GetMultipleStockQuote(List<string> symbols)
+    public async Task<List<StockQuoteDto>> GetMultipleStockQuote(List<string> symbols)
     {
-        var stockQuotes = new List<StockQuote>();
+        var stockQuotes = new List<StockQuoteDto>();
         foreach (var symbol in symbols)
         {
             var stockQuote = await GetStockQuote(symbol);

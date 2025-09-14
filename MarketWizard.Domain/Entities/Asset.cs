@@ -32,7 +32,7 @@ public partial class Asset
     {
         get
         {
-            return PriceHistories.OrderByDescending(x => x.Date).FirstOrDefault()?.Price;
+            return PriceHistories?.OrderByDescending(x => x.Date).FirstOrDefault()?.Price;
         }
     }
 }

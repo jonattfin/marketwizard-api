@@ -6,5 +6,14 @@ public class Subscription
 {
     [Subscribe]
     [Topic("StocksPriceUpdated")]
-    public List<StockQuote> OnStockPriceUpdated([EventMessage] List<StockQuote> stockQuote) => stockQuote;
+    public List<StockQuoteDto> OnStockPriceUpdated([EventMessage] List<StockQuoteDto> stockQuote) => stockQuote;
+    
+    [Subscribe]
+    [Topic("PortfolioDeleted")]
+    public Guid OnPortfolioDeleted([EventMessage] Guid portfolioId) => portfolioId;
+    
+    
+    [Subscribe]
+    [Topic("PortfolioUpdated")]
+    public Guid OnPortfolioUpdated([EventMessage] Guid portfolioId) => portfolioId;
 }

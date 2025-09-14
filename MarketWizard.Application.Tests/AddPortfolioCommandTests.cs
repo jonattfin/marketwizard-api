@@ -2,6 +2,7 @@
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Features.AddPortfolio;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace MarketWizard.Application.Tests;
@@ -15,9 +16,10 @@ public class AddPortfolioCommandTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var repositoryMock = new Mock<IPortfolioRepository>();
         var topicEventSenderMock = new Mock<ITopicEventSender>();
+        var loggerMock = new Mock<ILogger<AddPortfolioHandler>>();
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(repositoryMock.Object);
-        var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object);
+        var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object, loggerMock.Object);
 
         // Act
         var act = () => sut.Handle(new AddPortfolioCommand(new AddPortfolioInputDto()), CancellationToken.None);

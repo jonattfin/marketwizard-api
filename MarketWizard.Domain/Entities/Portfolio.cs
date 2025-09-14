@@ -16,7 +16,6 @@ public partial class Portfolio : BaseEntity
     public string ImageUrl { get; set; }
     
     public ICollection<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
-    
 }
 
 public partial class Portfolio

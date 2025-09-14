@@ -1,6 +1,6 @@
 ﻿namespace MarketWizard.Application.Dto;
 
-public class StockQuote
+public class StockQuoteDto
 {
     public string Symbol { get; set; }
     public decimal? CurrentPrice { get; set; }
