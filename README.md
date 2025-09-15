@@ -150,3 +150,11 @@ dotnet test
 - Portfolio performance statistics (including prices, market value)
 
 ***
+
+
+## License
+
+This project is licensed under the MIT License.
+
+***
+
