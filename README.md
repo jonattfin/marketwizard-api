@@ -3,7 +3,7 @@
 
 # Portfolio Management API
 
-This project is a **clean architecture API** for managing investment portfolios. It allows users to **create, update, and delete portfolios with associated stocks**, while following modern .NET backend development practices.
+This project follows a **clean architecture API** for managing investment portfolios. It allows users to **create, update, and delete portfolios with associated stocks**, while following modern .NET backend development practices.
 
 The API is built with the following technologies:
 
@@ -12,6 +12,7 @@ The API is built with the following technologies:
 - **Entity Framework Core (EF Core)** – data access with LINQ and repository abstractions
 - **PostgreSQL** – relational database backend
 - **FluentValidation** – robust request validation
+- **Serilog + Seq** – structured logging and centralized log management
 - **Clean Architecture principles** – ensuring testability, separation of concerns, and scalability
 
 ***
@@ -23,6 +24,7 @@ The API is built with the following technologies:
 - Delete portfolios
 - Query all portfolios or fetch individual portfolio details
 - GraphQL endpoint with typed schema for flexible queries
+- Centralized structured logging with Serilog, output to Seq
 
 ***
 
@@ -46,8 +48,7 @@ Typical layer dependencies flow **inward only**, following clean architecture pr
 - **MediatR** for CQRS and decoupled request handling
 - **Entity Framework Core** with **PostgreSQL** provider
 - **FluentValidation** for command validation
-- **Docker** support ( for PostgreSQL/database containerization)
-
+- **Docker** support (for PostgreSQL and Seq containerization)
 ***
 
 ## Getting Started
@@ -56,7 +57,7 @@ Typical layer dependencies flow **inward only**, following clean architecture pr
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [PostgreSQL](https://www.postgresql.org/download/) or [Docker](https://www.docker.com/) for containerized database
-
+- Seq for centralized logging (via local install or Docker)
 
 ### Installation \& Setup
 
