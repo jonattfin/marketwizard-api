@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.Finnhub", "MarketWizard.Finnhub\MarketWizard.Finnhub.csproj", "{C084C612-E55A-4328-8AB3-14D7A5D2FAA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.User", "MarketWizard.User\MarketWizard.User.csproj", "{B00C6C83-92F6-4DF7-AC81-8246C43FC215}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketWizard.Auth", "MarketWizard.Auth\MarketWizard.Auth.csproj", "{B00C6C83-92F6-4DF7-AC81-8246C43FC215}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
