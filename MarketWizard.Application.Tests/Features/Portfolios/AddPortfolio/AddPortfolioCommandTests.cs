@@ -2,10 +2,10 @@
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Features.Portfolios.AddPortfolio;
-using Microsoft.Extensions.Logging;
+using MarketWizard.Domain.Entities;
 using Moq;
 
-namespace MarketWizard.Application.Tests;
+namespace MarketWizard.Application.Tests.Features.Portfolios.AddPortfolio;
 
 public class AddPortfolioCommandTests
 {
@@ -20,13 +20,20 @@ public class AddPortfolioCommandTests
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(repositoryMock.Object);
         var sut = new AddPortfolioHandler(unitOfWorkMock.Object, topicEventSenderMock.Object);
 
+        using var cts = new CancellationTokenSource();
+        var cancellationToken = cts.Token;
+        
         // Act
-        var act = () => sut.Handle(new AddPortfolioCommand(new AddPortfolioInputDto()), CancellationToken.None);
+        var command = new AddPortfolioCommand(new AddPortfolioInputDto());
+        var act = () => sut.Handle(command, cancellationToken);
         
         // Assert
         await act.Should().NotThrowAsync<Exception>();
+        
+        repositoryMock.Verify(
+            x => x.Insert(It.IsAny<Portfolio>(), cancellationToken), Times.Once);;;
 
         topicEventSenderMock.Verify(
-            x => x.SendAsync("PortfolioAdded", It.IsAny<AddPortfolioInputDto>(), It.IsAny<CancellationToken>()), Times.Once);
+            x => x.SendAsync("PortfolioAdded", command.AddPortfolio, cancellationToken), Times.Once);
     }
 }

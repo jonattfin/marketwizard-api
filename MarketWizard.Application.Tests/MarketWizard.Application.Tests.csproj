@@ -24,4 +24,10 @@
       <ProjectReference Include="..\MarketWizard.Application\MarketWizard.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Portfolios\GetPortfolioById\" />
+      <Folder Include="Features\Portfolios\UpdatePortfolio\" />
+      <Folder Include="Features\Watchlist\" />
+    </ItemGroup>
+
 </Project>
