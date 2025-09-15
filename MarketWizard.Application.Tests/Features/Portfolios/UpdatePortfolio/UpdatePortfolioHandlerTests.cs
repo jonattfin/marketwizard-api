@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture;
+using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
@@ -12,6 +13,7 @@ public class UpdatePortfolioHandlerTests
     private readonly UpdatePortfolioHandler _sut;
     private readonly Mock<IPortfolioRepository> _mockPortfolioRepository;
     private readonly Mock<ITopicEventSender> _mockTopicEventSender;
+    private readonly Fixture _fixture = FixtureFactory.Create();
 
     public UpdatePortfolioHandlerTests()
     {
@@ -30,10 +32,13 @@ public class UpdatePortfolioHandlerTests
         using var cts = new CancellationTokenSource();
         var cancellationToken = cts.Token;
 
-        var request = new UpdatePortfolioCommand(new UpdatePortfolioInputDto() { Id = Guid.NewGuid() });
+        var request = _fixture.Create<UpdatePortfolioCommand>();
+        var portfolio = _fixture.Build<Portfolio>()
+            .With(x => x.Id, request.UpdatePortfolio.Id)
+            .Create();
 
         _mockPortfolioRepository.Setup(x => x.GetById(request.UpdatePortfolio.Id, cancellationToken))
-            .ReturnsAsync(new Portfolio());
+            .ReturnsAsync(portfolio);
 
         // Act
         var act = () => _sut.Handle(request, cancellationToken);
