@@ -1,8 +1,8 @@
-﻿using Mapster;
-using MarketWizard.Application.Contracts.Infra;
-using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Dto;
-using MarketWizardApi.Extensions;
+﻿using MarketWizard.Application.Dto;
+using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
+using MarketWizard.Application.Features.Portfolios.GetPortfolios;
+using MarketWizard.Application.Features.Watchlist.GetWatchlist;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketWizardApi.Schema;
@@ -13,34 +13,26 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IUnitOfWork unitOfWork,
-        [FromServices] IFinnhubService finnhubService,
+    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator,
         Guid userId, CancellationToken cancellationToken)
     {
-        var assets = (await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(userId, cancellationToken)).ToList();
-        var stockQuotes = await finnhubService.GetMultipleStockQuote(assets.Select(x => x.Symbol), cancellationToken);
-
-        return assets.ToAssetDtos(stockQuotes);
+         return await mediator.Send(new GetWatchlistQuery() {UserId = userId}, cancellationToken);
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting()]
-    public IQueryable<PortfolioSummaryDto> GetPortfolios([FromServices] IUnitOfWork unitOfWork,
+    public async Task<IQueryable<PortfolioSummaryDto>> GetPortfolios( [FromServices] IMediator mediator,
         CancellationToken cancellationToken)
     {
-        var portfolios = unitOfWork.PortfolioRepository.GetAllWithRelatedEntities(cancellationToken);
-        
-        return portfolios.ToSummaryDtos();
+        return await mediator.Send(new GetPortfoliosQuery(), cancellationToken);
     }
 
     [UseProjection]
-    public async Task<PortfolioDetailsDto?> GetPortfolioById([FromServices] IUnitOfWork unitOfWork, Guid portfolioId,
+    public async Task<PortfolioDetailsDto?> GetPortfolioById([FromServices] IMediator mediator, Guid portfolioId,
         CancellationToken cancellationToken)
     {
-        var portfolio = await unitOfWork.PortfolioRepository.GetByIdWithRelatedEntities(portfolioId, cancellationToken);
-        
-        return portfolio?.ToDetailsDto();
+        return await mediator.Send(new GetPortfolioByIdQuery() {PortfolioId = portfolioId}, cancellationToken);
     }
 }

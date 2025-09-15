@@ -4,9 +4,8 @@ using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Domain.Entities;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Application.Features.AddPortfolio;
+namespace MarketWizard.Application.Features.Portfolios.AddPortfolio;
 
 public record AddPortfolioCommand(AddPortfolioInputDto AddPortfolio) : ICommand<AddPortfolioOutputDto>;
 

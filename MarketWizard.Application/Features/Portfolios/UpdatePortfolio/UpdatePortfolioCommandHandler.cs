@@ -2,11 +2,9 @@
 using Mapster;
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Features.AddPortfolio;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Application.Features.UpdatePortfolio;
+namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 
 public record UpdatePortfolioCommand(UpdatePortfolioInputDto UpdatePortfolio) : ICommand<UpdatePortfolioOutputDto>;
 

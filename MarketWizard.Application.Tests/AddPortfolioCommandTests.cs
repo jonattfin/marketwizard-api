@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Features.AddPortfolio;
+using MarketWizard.Application.Features.Portfolios.AddPortfolio;
 using Microsoft.Extensions.Logging;
 using Moq;
 

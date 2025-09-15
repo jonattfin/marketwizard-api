@@ -6,7 +6,7 @@ public class Subscription
 {
     [Subscribe]
     [Topic("StocksPriceUpdated")]
-    public List<StockQuoteDto> OnStockPriceUpdated([EventMessage] List<StockQuoteDto> stockQuote) => stockQuote;
+    public ICollection<StockQuoteDto> OnStockPriceUpdated([EventMessage] ICollection<StockQuoteDto> stockQuote) => stockQuote;
     
     [Subscribe]
     [Topic("PortfolioDeleted")]

@@ -2,9 +2,8 @@
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Application.Features.DeletePortfolio;
+namespace MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 
 public record DeletePortfolioCommand(Guid PortfolioId) : ICommand<bool>;
 

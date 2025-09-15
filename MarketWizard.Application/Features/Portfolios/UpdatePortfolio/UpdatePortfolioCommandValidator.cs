@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MarketWizard.Application.Contracts.Persistence;
 
-namespace MarketWizard.Application.Features.UpdatePortfolio;
+namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 
 public class UpdatePortfolioCommandValidator : AbstractValidator<UpdatePortfolioCommand>
 {

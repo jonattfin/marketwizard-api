@@ -1,4 +1,4 @@
-﻿namespace MarketWizard.Application.Features.UpdatePortfolio;
+﻿namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 
 public class UpdatePortfolioOutputDto
 {

@@ -1,6 +1,6 @@
-﻿using MarketWizard.Application.Features.AddPortfolio;
-using MarketWizard.Application.Features.DeletePortfolio;
-using MarketWizard.Application.Features.UpdatePortfolio;
+﻿using MarketWizard.Application.Features.Portfolios.AddPortfolio;
+using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
+using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

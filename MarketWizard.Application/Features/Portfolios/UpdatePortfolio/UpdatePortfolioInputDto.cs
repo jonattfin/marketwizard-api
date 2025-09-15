@@ -1,7 +1,9 @@
-﻿namespace MarketWizard.Application.Features.AddPortfolio;
+﻿namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 
-public class AddPortfolioInputDto
+public class UpdatePortfolioInputDto
 {
+    public Guid Id { get; set; }
+    
     public string Name { get; set; }
     
     public Guid UserId { get; set; }
