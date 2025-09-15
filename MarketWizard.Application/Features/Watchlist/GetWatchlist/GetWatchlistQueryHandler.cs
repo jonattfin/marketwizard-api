@@ -1,6 +1,5 @@
 ﻿using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Dto;
 using MarketWizard.Domain.Entities;
 using MediatR;
 

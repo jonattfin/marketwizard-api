@@ -1,7 +1,6 @@
 ﻿
-using MarketWizard.Domain.Entities;
+namespace MarketWizard.Application.Features.Portfolios.GetPortfolios;
 
-namespace MarketWizard.Application.Dto;
 
 public class PortfolioSummaryDto
 {

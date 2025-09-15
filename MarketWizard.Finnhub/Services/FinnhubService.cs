@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using MarketWizard.Application.Contracts.Infra;
-using MarketWizard.Application.Dto;
+using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

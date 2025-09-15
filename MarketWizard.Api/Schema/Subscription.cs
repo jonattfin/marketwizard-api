@@ -1,4 +1,4 @@
-﻿using MarketWizard.Application.Dto;
+﻿using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 
 namespace MarketWizardApi.Schema;
 

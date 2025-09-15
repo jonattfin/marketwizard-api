@@ -1,5 +1,4 @@
-﻿using MarketWizard.Application.Dto;
-using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
+﻿using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
 using MarketWizard.Application.Features.Portfolios.GetPortfolios;
 using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 using MediatR;

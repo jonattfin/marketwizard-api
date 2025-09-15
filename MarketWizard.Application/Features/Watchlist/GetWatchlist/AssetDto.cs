@@ -1,6 +1,6 @@
 ﻿using MarketWizard.Domain.Entities;
 
-namespace MarketWizard.Application.Dto;
+namespace MarketWizard.Application.Features.Watchlist.GetWatchlist;
 
 public class AssetDto
 {
