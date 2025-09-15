@@ -139,7 +139,9 @@ Run tests with:
 ```bash
 dotnet test
 ```
+## Db diagram
 
+![Alt text](./diagram.png "Db diagram")
 
 ***
 
