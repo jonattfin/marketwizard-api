@@ -18,9 +18,6 @@ public class UpdatePortfolioCommandValidator : AbstractValidator<UpdatePortfolio
         
         RuleFor(x => x.UpdatePortfolio.Name).NotEmpty().MinimumLength(3);
         RuleFor(x => x.UpdatePortfolio.Description).NotEmpty().MinimumLength(10);
-        
-        RuleFor(x => x.UpdatePortfolio.UserId).NotEmpty()
-            .MustAsync(UserExists);
     }
 
     private async Task<bool> PortfolioExists(Guid portfolioId, CancellationToken cancellationToken)
@@ -29,9 +26,4 @@ public class UpdatePortfolioCommandValidator : AbstractValidator<UpdatePortfolio
         return portfolio != null;
     }
     
-    private async Task<bool> UserExists(Guid userId, CancellationToken cancellationToken)
-    {
-        var portfolio = await _unitOfWork.UserRepository.GetById(userId, cancellationToken);
-        return portfolio != null;
-    }
 }

@@ -2,11 +2,11 @@
 
 namespace MarketWizard.Domain.Entities;
 
-public class User : BaseEntity
+public class Tenant : BaseEntity
 {
     public string Name { get; set; }
 
     public string Email { get; set; }
     
-    public Tenant Tenant { get; set; }
+    public ICollection<User> Users { get; set; } = new List<User>();
 }

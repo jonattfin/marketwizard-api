@@ -2,7 +2,7 @@
 
 namespace MarketWizard.Domain.Entities;
 
-public class Watchlist : BaseEntity
+public class Watchlist : BaseEntity, IUserScopedEntity
 {
     public Guid Id { get; set; }
     

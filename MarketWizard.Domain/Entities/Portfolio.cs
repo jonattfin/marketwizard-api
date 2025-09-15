@@ -3,7 +3,7 @@ using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
 
-public partial class Portfolio : BaseEntity
+public partial class Portfolio : BaseEntity, IUserScopedEntity
 {
     public User User { get; set; }
     

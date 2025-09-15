@@ -1,6 +1,7 @@
 using MarketWizard.Application;
 using MarketWizard.Data;
 using MarketWizard.Finnhub;
+using MarketWizard.User;
 using MarketWizardApi;
 using MarketWizardApi.Schema;
 
@@ -36,7 +37,8 @@ builder.Services
 
 builder.Services.AddPersistenceServices(builder.Configuration)
     .AddApplicationServices(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration);
+    .AddInfrastructureServices(builder.Configuration)
+    .AddUserServices(builder.Configuration);
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 

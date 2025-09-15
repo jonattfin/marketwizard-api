@@ -1,4 +1,5 @@
-﻿using MarketWizard.Application.Contracts.Persistence;
+﻿using MarketWizard.Application.Contracts.Infra;
+using MarketWizard.Application.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MarketWizard.Data.Repositories;
@@ -11,7 +12,7 @@ public class UnitOfWork: IUnitOfWork, IDisposable, IAsyncDisposable
     private readonly Lazy<IWatchlistRepository> _watchlistRepository;
     private readonly Lazy<IUserRepository> _userRepository;
     
-    public UnitOfWork(MarketWizardContext context)
+    public UnitOfWork(MarketWizardContext context, IUserService userService)
     {
         _context = context;
         

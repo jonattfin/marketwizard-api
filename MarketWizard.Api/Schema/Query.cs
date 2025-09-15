@@ -12,10 +12,9 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator,
-        Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator, CancellationToken cancellationToken)
     {
-         return await mediator.Send(new GetWatchlistQuery() {UserId = userId}, cancellationToken);
+         return await mediator.Send(new GetWatchlistQuery(), cancellationToken);
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]

@@ -6,5 +6,5 @@ public interface IWatchlistRepository : IGenericRepository<Watchlist>
 {
     Task<IEnumerable<Watchlist>> GetAllWithAssets(CancellationToken cancellationToken);
     
-    Task<IEnumerable<Asset>> GetAllWithPriceHistories(Guid userId, CancellationToken cancellationToken);
+    Task<IEnumerable<Asset>> GetAllWithPriceHistories(CancellationToken cancellationToken);
 }

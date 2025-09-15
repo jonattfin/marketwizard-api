@@ -1,4 +1,5 @@
-﻿using MarketWizard.Application.Contracts.Persistence;
+﻿using MarketWizard.Application.Contracts.Infra;
+using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,13 +9,14 @@ public class WatchlistRepository(MarketWizardContext context) : GenericRepositor
 {
     public async Task<IEnumerable<Watchlist>> GetAllWithAssets(CancellationToken cancellationToken)
     {
-        return await DbSet.Include(watchlist => watchlist.Assets).ToListAsync(cancellationToken);
+        return await DbSet
+            .Include(watchlist => watchlist.Assets).ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Asset>> GetAllWithPriceHistories(Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Asset>> GetAllWithPriceHistories(CancellationToken cancellationToken)
     {
         var watchlist = await DbSet.Include(watchlist => watchlist.Assets)
-            .FirstAsync(x => x.UserId == userId, cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 
         return watchlist?.Assets ?? [];
     }
