@@ -1,7 +1,7 @@
 
 ***
 
-# Portfolio Management API
+# Market Wizard API
 
 This project follows a **clean architecture API** for managing investment portfolios. It allows users to **create, update, and delete portfolios with associated stocks**, while following modern .NET backend development practices.
 
