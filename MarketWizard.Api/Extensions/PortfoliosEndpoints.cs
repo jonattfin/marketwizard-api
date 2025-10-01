@@ -19,7 +19,7 @@ public static class PortfoliosEndpoints
     app.MapGet("/portfolios",
       async (IMediator mediator, CancellationToken cancellationToken) =>
       {
-        var portolios = await mediator.Send(mediator.Send(new GetPortfoliosQuery(), cancellationToken));
+        var portolios = await mediator.Send(new GetPortfoliosQuery(), cancellationToken);
         return Results.Ok(portolios);
       });
   }
