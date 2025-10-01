@@ -26,7 +26,7 @@ public class StockPriceBackgroundService(
             var stockQuotes = await finnhubService.GetMultipleStockQuote(symbols.ToList(), cancellationToken);
             await eventSender.SendAsync("StocksPriceUpdated", stockQuotes, cancellationToken);
 
-            await Task.Delay(TimeSpan.FromSeconds(60), cancellationToken);
+            await Task.Delay(TimeSpan.FromMinutes(60), cancellationToken);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
 using MarketWizard.Application.Features.Portfolios.GetPortfolios;
+using MarketWizard.Application.Features.Stocks.GetStockBySymbol;
 using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,12 @@ public class Query
         CancellationToken cancellationToken)
     {
         return await mediator.Send(new GetPortfolioByIdQuery() {PortfolioId = portfolioId}, cancellationToken);
+    }
+    
+    [UseProjection]
+    public async Task<StockDto?> GetStockBySymbol([FromServices] IMediator mediator, string stockSymbol,
+        CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new GetStockBySymbolQuery() {Symbol = stockSymbol}, cancellationToken);
     }
 }
