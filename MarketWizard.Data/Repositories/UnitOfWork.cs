@@ -1,6 +1,5 @@
 ﻿using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Application.Contracts.Persistence;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MarketWizard.Data.Repositories;
 

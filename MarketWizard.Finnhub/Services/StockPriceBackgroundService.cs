@@ -3,7 +3,6 @@ using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Application.Contracts.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace MarketWizard.Finnhub.Services;
 

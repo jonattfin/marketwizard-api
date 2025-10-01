@@ -1,5 +1,4 @@
-﻿using MarketWizard.Application.Contracts.Infra;
-using MarketWizard.Application.Contracts.Persistence;
+﻿using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
