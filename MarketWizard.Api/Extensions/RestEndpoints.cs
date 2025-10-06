@@ -7,6 +7,8 @@ namespace MarketWizardApi.Extensions;
 
 public static class RestEndpoints
 {
+  private const string RootPath = "/api";
+  
   public static void AddRestEndpoints(this WebApplication app)
   {
     app.AddRootEndpoint();
@@ -16,12 +18,12 @@ public static class RestEndpoints
 
   private static void AddRootEndpoint(this WebApplication app)
   {
-    app.MapGet("/api", () => "MarketWizard API");
+    app.MapGet(RootPath, () => "MarketWizard API");
   }
 
   private static void AddWatchlistEndpoints(this WebApplication app)
   {
-    app.MapGet("/api/watchlist",
+    app.MapGet($"{RootPath}/watchlist",
       async (IMediator mediator, CancellationToken cancellationToken) =>
       {
         var assets = await mediator.Send(new GetWatchlistQuery(), cancellationToken);
@@ -31,7 +33,7 @@ public static class RestEndpoints
 
   private static void AddPortfoliosEndpoints(this WebApplication app)
   {
-    app.MapGet("/api/portfolios/{id}",
+    app.MapGet($"{RootPath}/portfolios/"+"{portfolioId}",
       async (Guid portfolioId, IMediator mediator, CancellationToken cancellationToken) =>
       {
         var portfolio = await mediator.Send(new GetPortfolioByIdQuery() { PortfolioId = portfolioId },
@@ -39,7 +41,7 @@ public static class RestEndpoints
         return portfolio != null ? Results.Ok(portfolio) : Results.NotFound();
       });
 
-    app.MapGet("/api/portfolios",
+    app.MapGet($"{RootPath}/portfolios",
       async (IMediator mediator, CancellationToken cancellationToken) =>
       {
         var portolios = await mediator.Send(new GetPortfoliosQuery(), cancellationToken);
