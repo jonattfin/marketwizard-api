@@ -47,7 +47,7 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
         }
     }
 
-    public async Task<ICollection<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
     {
         var stockQuotes = new List<StockQuoteDto>();
         foreach (var symbol in symbols)

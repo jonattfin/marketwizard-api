@@ -12,6 +12,8 @@ public static class PersistenceServiceRegistration
     {
         var connectionString = configuration.GetConnectionString("MarketWizardConnection");
         services.AddDbContext<MarketWizardContext>(options => options.UseNpgsql(connectionString));
+
+        services.AddHealthChecks().AddNpgSql(connectionString!);
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
