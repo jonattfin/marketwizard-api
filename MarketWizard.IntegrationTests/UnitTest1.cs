@@ -3,7 +3,7 @@
 public class UnitTest1
 {
   [Fact]
-  public async Task SchemaChangeTest()
+  public void SchemaChangeTest()
   {
     // TODO
   }

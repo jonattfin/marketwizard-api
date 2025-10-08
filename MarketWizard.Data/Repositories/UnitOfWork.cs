@@ -11,7 +11,7 @@ public class UnitOfWork: IUnitOfWork, IDisposable, IAsyncDisposable
     private readonly Lazy<IWatchlistRepository> _watchlistRepository;
     private readonly Lazy<IUserRepository> _userRepository;
     
-    public UnitOfWork(MarketWizardContext context, IUserService userService)
+    public UnitOfWork(MarketWizardContext context)
     {
         _context = context;
         

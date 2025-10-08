@@ -31,7 +31,6 @@ public class UpdatePortfolioHandler(
 
         await sender.SendAsync("PortfolioUpdated", request.UpdatePortfolio.Id, cancellationToken);
 
-
         return new UpdatePortfolioOutputDto() { Id = request.UpdatePortfolio.Id };
     }
 }
