@@ -9,9 +9,11 @@ public static class InfraServiceRegistration
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var finnhubSection = configuration.GetSection("Finnhub");
+        
         services.AddHttpClient<IFinnhubService, FinnhubService>(client =>
         {
-            client.BaseAddress = new Uri("https://finnhub.io/api/v1/");
+            client.BaseAddress = new Uri(finnhubSection.GetValue<string>("BaseUrl")!);
         }).AddStandardResilienceHandler();
         
         services.AddHostedService<StockPriceBackgroundService>();

@@ -2,6 +2,7 @@
 using Mapster;
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
+using MarketWizard.Application.Exceptions;
 using MediatR;
 
 namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
@@ -21,7 +22,7 @@ public class UpdatePortfolioHandler(
 
         if (portfolioEntity is null)
         {
-            throw new ApplicationException("Portfolio not found");
+            throw new PortfolioNotFoundException(request.UpdatePortfolio.Id);
         }
 
         request.UpdatePortfolio.Adapt(portfolioEntity);

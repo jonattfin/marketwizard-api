@@ -3,6 +3,7 @@ using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
 using MarketWizard.Application.Features.Portfolios.GetPortfolios;
 using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
+using MarketWizard.Application.Features.Stocks.GetStockBySymbol;
 using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 using MediatR;
 
@@ -15,6 +16,7 @@ public static class RestEndpoints
     app.AddRootEndpoint();
     app.AddWatchlistEndpoints();
     app.AddPortfoliosEndpoints();
+    app.AddStocksEndpoints();
   }
 
   private static void AddRootEndpoint(this WebApplication app)
@@ -69,6 +71,16 @@ public static class RestEndpoints
       {
         await mediator.Send(new DeletePortfolioCommand(portfolioId), cancellationToken);
         return Results.NoContent();
+      });
+  }
+  
+  private static void AddStocksEndpoints(this WebApplication app)
+  {
+     app.MapGet("/api/stocks/{stockSymbol}",
+      async (string stockSymbol, IMediator mediator, CancellationToken cancellationToken) =>
+      {
+        var stock = await mediator.Send(new GetStockBySymbolQuery() {Symbol = stockSymbol}, cancellationToken);
+        return stock != null ? Results.Ok(stock) : Results.NotFound();
       });
   }
 }

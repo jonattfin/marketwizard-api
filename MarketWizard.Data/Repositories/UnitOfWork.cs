@@ -1,9 +1,8 @@
-﻿using MarketWizard.Application.Contracts.Infra;
-using MarketWizard.Application.Contracts.Persistence;
+﻿using MarketWizard.Application.Contracts.Persistence;
 
 namespace MarketWizard.Data.Repositories;
 
-public class UnitOfWork: IUnitOfWork, IDisposable, IAsyncDisposable
+public class UnitOfWork: IUnitOfWork
 {
     private readonly MarketWizardContext _context;
     
@@ -26,12 +25,8 @@ public class UnitOfWork: IUnitOfWork, IDisposable, IAsyncDisposable
     
     public IUserRepository UserRepository => _userRepository.Value;
 
-    public async Task Commit(CancellationToken cancellationToken = default)
+    public async Task Commit(CancellationToken cancellationToken)
     {
         await _context.SaveChangesAsync(cancellationToken);
     }
-
-    public void Dispose() => _context.Dispose();
-
-    public async ValueTask DisposeAsync() => await _context.DisposeAsync();
 }

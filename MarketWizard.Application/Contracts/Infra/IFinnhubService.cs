@@ -6,5 +6,5 @@ public interface IFinnhubService
 {
     Task<StockQuoteDto?> GetStockQuote(string symbol, CancellationToken cancellationToken = default);
     
-    Task<IReadOnlyList<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default);
+    Task<ICollection<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default);
 }

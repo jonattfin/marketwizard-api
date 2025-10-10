@@ -42,12 +42,12 @@ public class FinnhubService(HttpClient httpClient, IConfiguration configuration,
         }
         catch (Exception e)
         {
-            logger.LogError(e, e.Message);;
+            logger.LogError(e, e.Message);
             return null;
         }
     }
 
-    public async Task<IReadOnlyList<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
+    public async Task<ICollection<StockQuoteDto>> GetMultipleStockQuote(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
     {
         var stockQuotes = new List<StockQuoteDto>();
         foreach (var symbol in symbols)
