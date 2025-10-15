@@ -26,6 +26,7 @@ public class UpdatePortfolioHandler(
         }
 
         request.UpdatePortfolio.Adapt(portfolioEntity);
+        // portfolioEntity.Version = Guid.NewGuid();
 
         unitOfWork.PortfolioRepository.Update(portfolioEntity);
         await unitOfWork.Commit(cancellationToken);

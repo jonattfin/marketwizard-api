@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MarketWizard.Domain.Entities.Common;
 
 namespace MarketWizard.Domain.Entities;
@@ -16,6 +17,9 @@ public partial class Portfolio : BaseEntity, IUserScopedEntity
     public string ImageUrl { get; set; }
     
     public ICollection<PortfolioAsset> PortfolioAssets { get; set; } = new List<PortfolioAsset>();
+    
+    [ConcurrencyCheck]
+    public Guid Version { get; set; } = Guid.NewGuid();
 }
 
 public partial class Portfolio
