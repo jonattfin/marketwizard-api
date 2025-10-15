@@ -9,6 +9,7 @@ The API is built with the following technologies:
 
 - **GraphQL (HotChocolate)** – query and mutate data using a schema-first approach
 - **MediatR** – for clean separation of concerns and request/response handling
+- **MassTransit** – for microservice communication
 - **Entity Framework Core (EF Core)** – data access with LINQ and repository abstractions
 - **PostgreSQL** – relational database backend
 - **FluentValidation** – robust request validation
@@ -47,6 +48,7 @@ Typical layer dependencies flow **inward only**, following clean architecture pr
 - **HotChocolate GraphQL**
 - **MediatR** for CQRS and decoupled request handling
 - **Entity Framework Core** with **PostgreSQL** provider
+- **MassTransit** with **RabbitMQ** provider
 - **FluentValidation** for command validation
 - **Docker** support (for PostgreSQL and Seq containerization)
 ***

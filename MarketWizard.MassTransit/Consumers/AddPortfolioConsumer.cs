@@ -1,7 +1,8 @@
-﻿using MassTransit;
+﻿using MarketWizard.Application.Features.Portfolios.AddPortfolio;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Application.Features.Portfolios.AddPortfolio;
+namespace MarketWizard.MassTransit.Consumers;
 
 public class AddPortfolioConsumer(ILogger<AddPortfolioConsumer> logger): IConsumer<AddPortfolioMessage>
 {

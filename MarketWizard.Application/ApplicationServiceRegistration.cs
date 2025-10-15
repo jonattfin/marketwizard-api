@@ -21,31 +21,6 @@ public static class ApplicationServiceRegistration
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingBehavior<,>));
-
-        services.AddMassTransit((x) =>
-        {
-            x.AddConsumer<AddPortfolioConsumer>();
-            x.AddConsumer<UpdatePortfolioConsumer>();
-            
-            x.UsingRabbitMq((ctx, cfg) =>
-            {
-                cfg.Host("localhost", "/", h =>
-                {
-                    h.Username("myUser");
-                    h.Password("myPassword");
-                });
-                
-                cfg.ReceiveEndpoint("add-portfolio_queue", e =>
-                {
-                    e.ConfigureConsumer<AddPortfolioConsumer>(ctx);
-                });
-                
-                 cfg.ReceiveEndpoint("update-portfolio_queue", e =>
-                {
-                    e.ConfigureConsumer<UpdatePortfolioConsumer>(ctx);
-                });
-            });
-        });
         
         // add validators
         services.AddValidatorsFromAssembly(currentAssembly);

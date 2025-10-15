@@ -1,7 +1,8 @@
-﻿using MassTransit;
+﻿using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
+namespace MarketWizard.MassTransit.Consumers;
 
 public class UpdatePortfolioConsumer(ILogger<UpdatePortfolioConsumer> logger) : IConsumer<UpdatePortfolioMessage>
 {
