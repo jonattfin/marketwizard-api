@@ -8,6 +8,7 @@ This project follows a **clean architecture API** for managing investment portfo
 The API is built with the following technologies:
 
 - **GraphQL (HotChocolate)** – query and mutate data using a schema-first approach
+- **REST API's using Minimal API**
 - **MediatR** – for clean separation of concerns and request/response handling
 - **MassTransit** – for microservice communication
 - **Entity Framework Core (EF Core)** – data access with LINQ and repository abstractions
@@ -46,6 +47,7 @@ Typical layer dependencies flow **inward only**, following clean architecture pr
 
 - **.NET 9 / ASP.NET Core**
 - **HotChocolate GraphQL**
+- **REST API's using Minimal API**
 - **MediatR** for CQRS and decoupled request handling
 - **Entity Framework Core** with **PostgreSQL** provider
 - **MassTransit** with **RabbitMQ** provider
