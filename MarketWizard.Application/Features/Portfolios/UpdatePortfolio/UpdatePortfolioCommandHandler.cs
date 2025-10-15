@@ -11,7 +11,7 @@ public record UpdatePortfolioCommand(UpdatePortfolioInputDto UpdatePortfolio) : 
 
 public class UpdatePortfolioHandler(
     IUnitOfWork unitOfWork,
-    ITopicEventSender sender)
+    IMediator mediator)
     : IRequestHandler<UpdatePortfolioCommand, UpdatePortfolioOutputDto>
 {
     public async Task<UpdatePortfolioOutputDto> Handle(UpdatePortfolioCommand request,
@@ -29,8 +29,8 @@ public class UpdatePortfolioHandler(
 
         unitOfWork.PortfolioRepository.Update(portfolioEntity);
         await unitOfWork.Commit(cancellationToken);
-
-        await sender.SendAsync("PortfolioUpdated", request.UpdatePortfolio.Id, cancellationToken);
+        
+        await mediator.Publish(new UpdatePortfolioNotification() { PortfolioId = request.UpdatePortfolio.Id }, cancellationToken); 
 
         return new UpdatePortfolioOutputDto() { Id = request.UpdatePortfolio.Id };
     }

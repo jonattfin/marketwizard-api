@@ -1,5 +1,4 @@
-﻿using HotChocolate.Subscriptions;
-using Mapster;
+﻿using Mapster;
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Domain.Entities;
@@ -9,7 +8,7 @@ namespace MarketWizard.Application.Features.Portfolios.AddPortfolio;
 
 public record AddPortfolioCommand(AddPortfolioInputDto AddPortfolio) : ICommand<AddPortfolioOutputDto>;
 
-public class AddPortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender sender)
+public class AddPortfolioHandler(IUnitOfWork unitOfWork, IMediator mediator)
     : IRequestHandler<AddPortfolioCommand, AddPortfolioOutputDto>
 {
     public async Task<AddPortfolioOutputDto> Handle(AddPortfolioCommand request, CancellationToken cancellationToken)
@@ -20,7 +19,7 @@ public class AddPortfolioHandler(IUnitOfWork unitOfWork, ITopicEventSender sende
         await unitOfWork.PortfolioRepository.Insert(portfolioEntity, cancellationToken);
         await unitOfWork.Commit(cancellationToken);
 
-        await sender.SendAsync("PortfolioAdded", request.AddPortfolio, cancellationToken);
+        await mediator.Publish(new AddPortfolioNotification() { Portfolio = portfolioEntity }, cancellationToken);       
 
         return new AddPortfolioOutputDto() { Id = portfolioEntity.Id };
     }

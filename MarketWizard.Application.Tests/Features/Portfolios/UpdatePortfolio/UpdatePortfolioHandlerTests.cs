@@ -2,8 +2,10 @@
 using FluentAssertions;
 using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
+using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 using MarketWizard.Domain.Entities;
+using MediatR;
 using Moq;
 
 namespace MarketWizard.Application.Tests.Features.Portfolios.UpdatePortfolio;
@@ -12,7 +14,7 @@ public class UpdatePortfolioHandlerTests
 {
     private readonly UpdatePortfolioHandler _sut;
     private readonly Mock<IPortfolioRepository> _mockPortfolioRepository;
-    private readonly Mock<ITopicEventSender> _mockTopicEventSender;
+    private readonly Mock<IMediator> _mockMediator;
     private readonly Fixture _fixture = FixtureFactory.Create();
 
     public UpdatePortfolioHandlerTests()
@@ -20,10 +22,10 @@ public class UpdatePortfolioHandlerTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         _mockPortfolioRepository = new Mock<IPortfolioRepository>();
-        _mockTopicEventSender = new Mock<ITopicEventSender>();
+        _mockMediator = new Mock<IMediator>();
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(_mockPortfolioRepository.Object);
-        _sut = new UpdatePortfolioHandler(unitOfWorkMock.Object, _mockTopicEventSender.Object);
+        _sut = new UpdatePortfolioHandler(unitOfWorkMock.Object, _mockMediator.Object);
     }
 
     [Fact]
@@ -48,8 +50,8 @@ public class UpdatePortfolioHandlerTests
 
         _mockPortfolioRepository.Verify(
             x => x.Update(It.IsAny<Portfolio>()), Times.Once);
-
-        _mockTopicEventSender.Verify(
-            x => x.SendAsync("PortfolioUpdated", request.UpdatePortfolio.Id, cancellationToken), Times.Once);
+        
+        _mockMediator.Verify(
+            x => x.Publish(It.IsAny<UpdatePortfolioNotification>(), cancellationToken), Times.Once);
     }
 }

@@ -1,4 +1,14 @@
 ﻿services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=myUser
+      - RABBITMQ_DEFAULT_PASS=myPassword
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
   seq:
     image: datalust/seq:latest
     environment:
@@ -24,4 +34,5 @@
 #    depends_on:
 #      - postgres
 #      - seq
+#      - rabbitmq
 

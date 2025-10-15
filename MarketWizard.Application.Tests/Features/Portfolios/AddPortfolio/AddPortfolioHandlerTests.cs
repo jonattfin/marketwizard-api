@@ -3,6 +3,7 @@ using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Features.Portfolios.AddPortfolio;
 using MarketWizard.Domain.Entities;
+using MediatR;
 using Moq;
 
 namespace MarketWizard.Application.Tests.Features.Portfolios.AddPortfolio;
@@ -11,17 +12,17 @@ public class AddPortfolioHandlerTests
 {
     private readonly AddPortfolioHandler _sut;
     private readonly Mock<IPortfolioRepository> _mockPortfolioRepository;
-    private readonly Mock<ITopicEventSender> _mockTopicEventSender;
+    private readonly Mock<IMediator> _mockMediator;
 
     public AddPortfolioHandlerTests()
     {
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         _mockPortfolioRepository = new Mock<IPortfolioRepository>();
-        _mockTopicEventSender = new Mock<ITopicEventSender>();
+        _mockMediator = new Mock<IMediator>();
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(_mockPortfolioRepository.Object);
-        _sut = new AddPortfolioHandler(unitOfWorkMock.Object, _mockTopicEventSender.Object);
+        _sut = new AddPortfolioHandler(unitOfWorkMock.Object, _mockMediator.Object);
     }
 
     [Fact]
@@ -40,7 +41,7 @@ public class AddPortfolioHandlerTests
         _mockPortfolioRepository.Verify(
             x => x.Insert(It.IsAny<Portfolio>(), cancellationToken), Times.Once);
 
-        _mockTopicEventSender.Verify(
-            x => x.SendAsync("PortfolioAdded", command.AddPortfolio, cancellationToken), Times.Once);
+        _mockMediator.Verify(
+            x => x.Publish(It.IsAny<AddPortfolioNotification>(), cancellationToken), Times.Once);
     }
 }
