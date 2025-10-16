@@ -1,5 +1,4 @@
-﻿using HotChocolate.Subscriptions;
-using Mapster;
+﻿using Mapster;
 using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Exceptions;
@@ -10,8 +9,7 @@ namespace MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 public record UpdatePortfolioCommand(UpdatePortfolioInputDto UpdatePortfolio) : ICommand<UpdatePortfolioOutputDto>;
 
 public class UpdatePortfolioHandler(
-    IUnitOfWork unitOfWork,
-    IMediator mediator)
+    IUnitOfWork unitOfWork)
     : IRequestHandler<UpdatePortfolioCommand, UpdatePortfolioOutputDto>
 {
     public async Task<UpdatePortfolioOutputDto> Handle(UpdatePortfolioCommand request,
@@ -26,12 +24,10 @@ public class UpdatePortfolioHandler(
         }
 
         request.UpdatePortfolio.Adapt(portfolioEntity);
-        // portfolioEntity.Version = Guid.NewGuid();
+        // portfolioEntity.Version = Guid.NewGuid(); // TODO - Revisit versioning
 
         unitOfWork.PortfolioRepository.Update(portfolioEntity);
         await unitOfWork.Commit(cancellationToken);
-        
-        await mediator.Publish(new UpdatePortfolioNotification() { PortfolioId = request.UpdatePortfolio.Id }, cancellationToken); 
 
         return new UpdatePortfolioOutputDto() { Id = request.UpdatePortfolio.Id };
     }

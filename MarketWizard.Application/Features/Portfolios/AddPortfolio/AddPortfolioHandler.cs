@@ -13,7 +13,7 @@ public class PortfolioAddedEvent
 
 public record AddPortfolioCommand(AddPortfolioInputDto AddPortfolio) : ICommand<AddPortfolioOutputDto>;
 
-public class AddPortfolioHandler(IUnitOfWork unitOfWork, IMediator mediator)
+public class AddPortfolioHandler(IUnitOfWork unitOfWork)
     : IRequestHandler<AddPortfolioCommand, AddPortfolioOutputDto>
 {
     public async Task<AddPortfolioOutputDto> Handle(AddPortfolioCommand request, CancellationToken cancellationToken)
@@ -23,8 +23,6 @@ public class AddPortfolioHandler(IUnitOfWork unitOfWork, IMediator mediator)
 
         await unitOfWork.PortfolioRepository.Insert(portfolioEntity, cancellationToken);
         await unitOfWork.Commit(cancellationToken);
-
-        await mediator.Publish(new AddPortfolioNotification() { Portfolio = portfolioEntity }, cancellationToken);
 
         return new AddPortfolioOutputDto() { Id = portfolioEntity.Id };
     }

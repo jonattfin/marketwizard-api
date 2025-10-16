@@ -1,5 +1,4 @@
 ﻿using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Data.Consumers;
 using MarketWizard.Data.Repositories;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;

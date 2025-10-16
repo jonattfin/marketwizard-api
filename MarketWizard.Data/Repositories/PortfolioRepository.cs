@@ -1,5 +1,6 @@
 ﻿using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Application.Features.Portfolios.AddPortfolio;
+using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 using MarketWizard.Domain.Entities;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,13 @@ public class PortfolioRepository(MarketWizardContext context, IPublishEndpoint p
         await base.Insert(entity, cancellationToken);
         
         await publishEndpoint.Publish(new PortfolioAddedEvent() { PortfolioId = entity.Id }, cancellationToken);
+    }
+
+    public override async Task Delete(Guid id, CancellationToken cancellationToken = default)
+    {
+        await base.Delete(id, cancellationToken);
+        
+        await publishEndpoint.Publish(new PortfolioDeletedEvent() { PortfolioId = id }, cancellationToken);
     }
 
     public IQueryable<Portfolio> GetAllWithRelatedEntities(CancellationToken cancellationToken = default)

@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
 using MarketWizard.Application.Behaviours;
-using MarketWizard.Application.Features.Portfolios.AddPortfolio;
-using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
-using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

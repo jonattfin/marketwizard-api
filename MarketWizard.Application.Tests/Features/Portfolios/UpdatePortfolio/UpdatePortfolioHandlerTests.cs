@@ -1,11 +1,8 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using HotChocolate.Subscriptions;
 using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
 using MarketWizard.Domain.Entities;
-using MediatR;
 using Moq;
 
 namespace MarketWizard.Application.Tests.Features.Portfolios.UpdatePortfolio;
@@ -14,7 +11,6 @@ public class UpdatePortfolioHandlerTests
 {
     private readonly UpdatePortfolioHandler _sut;
     private readonly Mock<IPortfolioRepository> _mockPortfolioRepository;
-    private readonly Mock<IMediator> _mockMediator;
     private readonly Fixture _fixture = FixtureFactory.Create();
 
     public UpdatePortfolioHandlerTests()
@@ -22,10 +18,10 @@ public class UpdatePortfolioHandlerTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         _mockPortfolioRepository = new Mock<IPortfolioRepository>();
-        _mockMediator = new Mock<IMediator>();
+
 
         unitOfWorkMock.Setup(x => x.PortfolioRepository).Returns(_mockPortfolioRepository.Object);
-        _sut = new UpdatePortfolioHandler(unitOfWorkMock.Object, _mockMediator.Object);
+        _sut = new UpdatePortfolioHandler(unitOfWorkMock.Object);
     }
 
     [Fact]
@@ -50,8 +46,5 @@ public class UpdatePortfolioHandlerTests
 
         _mockPortfolioRepository.Verify(
             x => x.Update(It.IsAny<Portfolio>()), Times.Once);
-        
-        _mockMediator.Verify(
-            x => x.Publish(It.IsAny<UpdatePortfolioNotification>(), cancellationToken), Times.Once);
     }
 }

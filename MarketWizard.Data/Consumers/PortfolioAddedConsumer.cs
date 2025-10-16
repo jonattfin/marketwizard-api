@@ -1,16 +1,16 @@
-﻿using MarketWizard.Application.Features.Portfolios.AddPortfolio;
+﻿using HotChocolate.Subscriptions;
+using MarketWizard.Application.Features.Portfolios.AddPortfolio;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace MarketWizard.Data.Consumers;
 
-public abstract class PortfolioAddedConsumer(ILogger<PortfolioAddedConsumer> logger) : IConsumer<PortfolioAddedEvent>
+public abstract class PortfolioAddedConsumer(ITopicEventSender sender, ILogger<PortfolioAddedConsumer> logger)
+    : IConsumer<PortfolioAddedEvent>
 {
-  public Task Consume(ConsumeContext<PortfolioAddedEvent> context)
-  {
-    // TODO - Save this in DB
-    logger.LogInformation("Consumed event: " + context.Message.PortfolioId);
-    
-    return Task.CompletedTask;
-  }
+    public async Task Consume(ConsumeContext<PortfolioAddedEvent> context)
+    {
+        // publish the subscription event (graphql subscription)
+        await sender.SendAsync("PortfolioAdded", context.Message.PortfolioId, context.CancellationToken);
+    }
 }
