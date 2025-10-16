@@ -32,7 +32,6 @@
       <ProjectReference Include="..\MarketWizard.Data\MarketWizard.Data.csproj" />
       <ProjectReference Include="..\MarketWizard.Finnhub\MarketWizard.Finnhub.csproj" />
       <ProjectReference Include="..\MarketWizard.Auth\MarketWizard.Auth.csproj" />
-      <ProjectReference Include="..\MarketWizard.MassTransit\MarketWizard.MassTransit.csproj" />
     </ItemGroup>
 
 </Project>

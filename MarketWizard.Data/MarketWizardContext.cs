@@ -1,6 +1,7 @@
 ﻿using MarketWizard.Application.Contracts.Infra;
 using MarketWizard.Domain.Entities;
 using MarketWizard.Domain.Entities.Common;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data;
@@ -19,7 +20,12 @@ public class MarketWizardContext(DbContextOptions<MarketWizardContext> options, 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
+        
+        // Configure MassTransit OutBox Entities
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
+        
         var authenticatedUserId = userService.GetAuthenticatedUserId();
 
         modelBuilder.Entity<Portfolio>().HasQueryFilter(p => p.UserId == authenticatedUserId);

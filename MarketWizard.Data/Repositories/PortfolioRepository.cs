@@ -1,11 +1,20 @@
 ﻿using MarketWizard.Application.Contracts.Persistence;
+using MarketWizard.Application.Features.Portfolios.AddPortfolio;
 using MarketWizard.Domain.Entities;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
 
-public class PortfolioRepository(MarketWizardContext context) : GenericRepository<Portfolio>(context), IPortfolioRepository
+public class PortfolioRepository(MarketWizardContext context, IPublishEndpoint publishEndpoint) : GenericRepository<Portfolio>(context), IPortfolioRepository
 {
+    public override async Task Insert(Portfolio entity, CancellationToken cancellationToken = default)
+    {
+        await base.Insert(entity, cancellationToken);
+        
+        await publishEndpoint.Publish(new PortfolioAddedEvent() { PortfolioId = entity.Id }, cancellationToken);
+    }
+
     public IQueryable<Portfolio> GetAllWithRelatedEntities(CancellationToken cancellationToken = default)
     {
         return DbSet
