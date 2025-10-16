@@ -9,9 +9,12 @@ public class Subscription
     public ICollection<StockQuoteDto> OnStockPriceUpdated([EventMessage] ICollection<StockQuoteDto> stockQuote) => stockQuote;
     
     [Subscribe]
+    [Topic("PortfolioCreated")]
+    public Guid OnPortfolioCreated([EventMessage] Guid portfolioId) => portfolioId;
+    
+    [Subscribe]
     [Topic("PortfolioDeleted")]
     public Guid OnPortfolioDeleted([EventMessage] Guid portfolioId) => portfolioId;
-    
     
     [Subscribe]
     [Topic("PortfolioUpdated")]

@@ -1,26 +1,38 @@
-﻿using MarketWizard.Application.Contracts.Persistence;
-using MarketWizard.Application.Features.Portfolios.AddPortfolio;
-using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
+﻿using MarketWizard.Application.Contracts.Events;
+using MarketWizard.Application.Contracts.Persistence;
 using MarketWizard.Domain.Entities;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketWizard.Data.Repositories;
 
-public class PortfolioRepository(MarketWizardContext context, IPublishEndpoint publishEndpoint) : GenericRepository<Portfolio>(context), IPortfolioRepository
+public class PortfolioRepository(MarketWizardContext context, IPublishEndpoint publishEndpoint)
+    : GenericRepository<Portfolio>(context), IPortfolioRepository
 {
     public override async Task Insert(Portfolio entity, CancellationToken cancellationToken = default)
     {
         await base.Insert(entity, cancellationToken);
-        
-        await publishEndpoint.Publish(new PortfolioAddedEvent() { PortfolioId = entity.Id }, cancellationToken);
+
+        await publishEndpoint.Publish(
+            new EntityEvent()
+            {
+                Id = entity.Id,
+                EventType = EntityEventType.Portfolio,
+                Status = EntityEventStatus.Created
+            }, cancellationToken);
     }
 
     public override async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {
         await base.Delete(id, cancellationToken);
-        
-        await publishEndpoint.Publish(new PortfolioDeletedEvent() { PortfolioId = id }, cancellationToken);
+
+        await publishEndpoint.Publish(
+            new EntityEvent()
+            {
+                Id = id,
+                EventType = EntityEventType.Portfolio,
+                Status = EntityEventStatus.Deleted
+            }, cancellationToken);
     }
 
     public IQueryable<Portfolio> GetAllWithRelatedEntities(CancellationToken cancellationToken = default)

@@ -6,11 +6,6 @@ using MediatR;
 
 namespace MarketWizard.Application.Features.Portfolios.AddPortfolio;
 
-public class PortfolioAddedEvent
-{
-    public Guid PortfolioId { get; set; }
-}
-
 public record AddPortfolioCommand(AddPortfolioInputDto AddPortfolio) : ICommand<AddPortfolioOutputDto>;
 
 public class AddPortfolioHandler(IUnitOfWork unitOfWork)
