@@ -10,7 +10,7 @@ public class SwotService : ISwotService
     
     public SwotService(IConfiguration configuration)
     {
-        var aiSection = configuration.GetSection("OpenApi");
+        var aiSection = configuration.GetSection("AIApi");
         _chatClient = new ChatClient("gpt-4o", aiSection.GetValue<string>("Token"));
     }
     
