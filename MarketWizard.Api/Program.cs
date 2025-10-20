@@ -1,3 +1,4 @@
+using MarketWizard.AI;
 using MarketWizard.Application;
 using MarketWizard.Data;
 using MarketWizard.Finnhub;
@@ -39,7 +40,8 @@ builder.Services
 builder.Services.AddPersistenceServices(builder.Configuration)
     .AddApplicationServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration)
-    .AddUserServices(builder.Configuration);
+    .AddUserServices(builder.Configuration)
+    .AddAIServices(builder.Configuration);
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 

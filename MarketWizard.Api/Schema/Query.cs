@@ -1,6 +1,8 @@
-﻿using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
+﻿using MarketWizard.Application.Contracts.Infra;
+using MarketWizard.Application.Features.Portfolios.GetPortfolioById;
 using MarketWizard.Application.Features.Portfolios.GetPortfolios;
 using MarketWizard.Application.Features.Stocks.GetStockBySymbol;
+using MarketWizard.Application.Features.Stocks.GetSwotAnalysis;
 using MarketWizard.Application.Features.Watchlist.GetWatchlist;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +15,17 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator, CancellationToken cancellationToken)
+    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator,
+        CancellationToken cancellationToken)
     {
-         return await mediator.Send(new GetWatchlistQuery(), cancellationToken);
+        return await mediator.Send(new GetWatchlistQuery(), cancellationToken);
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]
     [UseProjection]
     [UseFiltering]
     [UseSorting()]
-    public async Task<IQueryable<PortfolioSummaryDto>> GetPortfolios( [FromServices] IMediator mediator,
+    public async Task<IQueryable<PortfolioSummaryDto>> GetPortfolios([FromServices] IMediator mediator,
         CancellationToken cancellationToken)
     {
         return await mediator.Send(new GetPortfoliosQuery(), cancellationToken);
@@ -32,13 +35,20 @@ public class Query
     public async Task<PortfolioDetailsDto?> GetPortfolioById([FromServices] IMediator mediator, Guid portfolioId,
         CancellationToken cancellationToken)
     {
-        return await mediator.Send(new GetPortfolioByIdQuery() {PortfolioId = portfolioId}, cancellationToken);
+        return await mediator.Send(new GetPortfolioByIdQuery() { PortfolioId = portfolioId }, cancellationToken);
     }
-    
+
     [UseProjection]
     public async Task<StockDto?> GetStockBySymbol([FromServices] IMediator mediator, string stockSymbol,
         CancellationToken cancellationToken)
     {
-        return await mediator.Send(new GetStockBySymbolQuery() {Symbol = stockSymbol}, cancellationToken);
+        return await mediator.Send(new GetStockBySymbolQuery() { Symbol = stockSymbol }, cancellationToken);
+    }
+
+    [UseProjection]
+    public async Task<SwotAnalysis> GetSwotAnalysis([FromServices] IMediator mediator, string companyName,
+        CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new GetSwotAnalysisQuery() { CompanyName = companyName }, cancellationToken);
     }
 }
