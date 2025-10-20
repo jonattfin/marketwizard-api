@@ -11,7 +11,7 @@ public class SwotService : ISwotService
     public SwotService(IConfiguration configuration)
     {
         var aiSection = configuration.GetSection("OpenApi");
-        _chatClient = new ChatClient("gpt-4o", aiSection.GetValue<string>("Api_Key"));
+        _chatClient = new ChatClient("gpt-4o", aiSection.GetValue<string>("Token"));
     }
     
     public async Task<SwotAnalysis> GetSwotAnalysis(string companyName)
