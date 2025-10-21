@@ -1,7 +1,5 @@
 ﻿using MarketWizard.Application.Contracts.CQRS;
 using MarketWizard.Application.Contracts.Persistence;
-
-using MarketWizard.Domain.Entities;
 using MediatR;
 
 namespace MarketWizard.Application.Features.Watchlist.AddAsset;
@@ -11,7 +9,7 @@ public record AddAssetCommand(AddAssetInputDto AddAssetInputDto) : ICommand<AddA
 public class AddAssetInputDto
 {
     public Guid WatchlistId { get; set; }
-    public string Symbol { get; set; }
+    public Guid AssetId { get; set; }
 }
 
 public class AddAssetOutputDto
@@ -19,7 +17,7 @@ public class AddAssetOutputDto
     public Guid Id { get; set; }
 }
 
-public record AddAssetCommandHandler(AddAssetInputDto AddPortfolio) : ICommand<AddAssetOutputDto>;
+public record AddAssetCommandHandler(AddAssetInputDto AddAssetInput) : ICommand<AddAssetOutputDto>;
 
 public class AddAssetHandler(IUnitOfWork unitOfWork)
     : IRequestHandler<AddAssetCommand, AddAssetOutputDto>
@@ -33,22 +31,20 @@ public class AddAssetHandler(IUnitOfWork unitOfWork)
             throw new Exception("Watchlist not found");
         }
 
-        var asset = new Asset()
+        var asset = await unitOfWork.AssetRepository.GetById(request.AddAssetInputDto.AssetId, cancellationToken);
+        if (asset == null)
         {
-            Symbol = request.AddAssetInputDto.Symbol,
-            Name = request.AddAssetInputDto.Symbol,
-            Description = string.Empty,
-            Type = AssetType.Stock,
-            Id = Guid.NewGuid()
-        };
+            throw new Exception("Asset not found");       
+        }
 
-        await unitOfWork.AssetRepository.Insert(asset, cancellationToken);
+        if (watchlist.Assets.Any(x => x.Id == asset.Id)) 
+            return new AddAssetOutputDto() { Id = asset.Id };
         
         watchlist.Assets.Add(asset);
         unitOfWork.WatchlistRepository.Update(watchlist);
         
         await unitOfWork.Commit(cancellationToken);
-
+        
         return new AddAssetOutputDto() { Id = asset.Id };
     }
 }
