@@ -4,6 +4,7 @@ using MarketWizard.Application.Features.Portfolios.GetPortfolios;
 using MarketWizard.Application.Features.Stocks.GetStockBySymbol;
 using MarketWizard.Application.Features.Stocks.GetSwotAnalysis;
 using MarketWizard.Application.Features.Watchlist.GetWatchlist;
+using MarketWizard.Application.Features.Watchlist.GetWatchlists;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,20 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator,
+    public async Task<IEnumerable<WatchlistDto>> GetWatchlists([FromServices] IMediator mediator,
         CancellationToken cancellationToken)
     {
-        return await mediator.Send(new GetWatchlistQuery(), cancellationToken);
+        return await mediator.Send(new GetWatchlistsQuery(), cancellationToken);
+    }
+    
+    [UseOffsetPaging(IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public async Task<IEnumerable<AssetDto>> GetWatchlistAssets([FromServices] IMediator mediator, Guid watchlistId,
+        CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new GetWatchlistQuery() {WatchlistId = watchlistId}, cancellationToken);
     }
 
     [UseOffsetPaging(IncludeTotalCount = true)]

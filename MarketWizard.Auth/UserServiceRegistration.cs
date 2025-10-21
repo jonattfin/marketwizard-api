@@ -9,7 +9,7 @@ public static class UserServiceRegistration
 {
     public static IServiceCollection AddUserServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.AddSingleton<IUserService, UserService>();
 
         return services;
     }

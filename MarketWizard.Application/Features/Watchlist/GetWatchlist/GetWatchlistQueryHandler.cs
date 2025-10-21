@@ -8,6 +8,7 @@ namespace MarketWizard.Application.Features.Watchlist.GetWatchlist;
 
 public class GetWatchlistQuery : IRequest<IEnumerable<AssetDto>>
 {
+  public Guid WatchlistId { get; set; }
 }
 
 public class GetWatchlistQueryHandler(
@@ -19,7 +20,10 @@ public class GetWatchlistQueryHandler(
 {
   public async Task<IEnumerable<AssetDto>> Handle(GetWatchlistQuery request, CancellationToken cancellationToken)
   {
-    var assets = (await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(cancellationToken)).ToList();
+    var assets = (await unitOfWork.WatchlistRepository.GetAllWithPriceHistories(
+      userService.GetAuthenticatedUserId(), request.WatchlistId, cancellationToken))
+      .ToList();
+    
     var stockQuotes =
       await finnhubService.GetMultipleStockQuote(assets.Select(x => x.Symbol), cancellationToken);
 

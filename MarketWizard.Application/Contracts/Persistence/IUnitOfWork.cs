@@ -8,5 +8,7 @@ public interface IUnitOfWork
     
     IUserRepository UserRepository { get; }
     
+    IAssetRepository AssetRepository { get; }
+    
     Task Commit(CancellationToken cancellationToken);
 }

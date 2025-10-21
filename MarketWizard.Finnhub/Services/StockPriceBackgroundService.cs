@@ -9,7 +9,9 @@ namespace MarketWizard.Finnhub.Services;
 public class StockPriceBackgroundService(
     IFinnhubService finnhubService,
     ITopicEventSender eventSender,
-    IServiceProvider serviceProvider)
+    IServiceProvider serviceProvider,
+    IUserService userService
+    )
     : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,7 +21,7 @@ public class StockPriceBackgroundService(
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            var watchlist = await unitOfWork.WatchlistRepository.GetAllWithAssets(stoppingToken);
+            var watchlist = await unitOfWork.WatchlistRepository.GetAllWithAssets(userService.GetAuthenticatedUserId(), stoppingToken);
             var symbols = watchlist.SelectMany(watchlistItem => watchlistItem.Assets).Distinct().Select(x => x.Symbol);
 
             var stockQuotes = await finnhubService.GetMultipleStockQuote(symbols.ToList(), stoppingToken);

@@ -1,6 +1,7 @@
 ﻿using MarketWizard.Application.Features.Portfolios.AddPortfolio;
 using MarketWizard.Application.Features.Portfolios.DeletePortfolio;
 using MarketWizard.Application.Features.Portfolios.UpdatePortfolio;
+using MarketWizard.Application.Features.Watchlist.AddAsset;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,10 @@ public class Mutation
     public async Task<bool> DeletePortfolio(Guid portfolioId, [FromServices] IMediator mediator, CancellationToken cancellationToken)
     {
         return await mediator.Send(new DeletePortfolioCommand(portfolioId), cancellationToken);
+    }
+    
+    public async Task<AddAssetOutputDto> AddAssetToWatchlist(AddAssetInputDto assetInput, [FromServices] IMediator mediator, CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new AddAssetCommand(assetInput), cancellationToken);
     }
 }
