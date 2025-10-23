@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Caching.Abstractions">
+        <HintPath>..\..\..\scoop\apps\dotnet-sdk\current\shared\Microsoft.AspNetCore.App\9.0.8\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
         <HintPath>..\..\..\scoop\apps\dotnet-sdk\current\shared\Microsoft.AspNetCore.App\9.0.8\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
       </Reference>
@@ -24,6 +27,7 @@
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
       <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.8.0" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.9" />
+      <PackageReference Include="Scrutor" Version="6.1.0" />
     </ItemGroup>
 
 </Project>

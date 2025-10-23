@@ -4,6 +4,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sats.PostgreSqlDistributedCache;
 
 namespace MarketWizard.Data;
 
@@ -25,9 +26,20 @@ public static class PersistenceServiceRegistration
         services.AddHealthChecks().AddNpgSql(connectionString!);
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        ConfigureDistributedCache(services, configuration);
         ConfigureMassTransit(services, configuration);
 
         return services;
+    }
+
+    private static void ConfigureDistributedCache(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddPostgresDistributedCache(options =>
+        {
+            options.ConnectionString = configuration.GetConnectionString("MarketWizardConnection")!;
+            options.SchemaName = "public";
+            options.TableName = "cache";
+        });
     }
 
     private static void ConfigureMassTransit(IServiceCollection services, IConfiguration configuration)

@@ -16,6 +16,8 @@ public static class InfraServiceRegistration
             client.BaseAddress = new Uri(finnhubSection.GetValue<string>("BaseUrl")!);
         }).AddStandardResilienceHandler();
         
+        services.Decorate<IFinnhubService, FinnhubServiceCacheDecorator>();
+        
         services.AddHostedService<StockPriceBackgroundService>();
         
         return services;
